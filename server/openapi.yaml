@@ -1,0 +1,100 @@
+openapi: 3.0.0
+servers:
+    url: https://virtserver.swaggerhub.com/1NIKOLAUSALBERT1/Skai.market/1.0.0
+info:
+  version: "1.0.0"
+  title: Skai-market
+  description: simple online market project
+tags:
+  - name: admin
+    description: related to admin
+  - name: users
+    description: Users
+  - name: products
+    description: Products
+  - name: carts
+    description: Shopping cart
+  - name: orders
+    description: product orders
+  - name: auth
+    description: Authentication/Authorization
+  - name: payment
+    description: handles payment with Stripe
+  paths:
+    /api/auth/admin/main_advertisement:
+      post:
+        tags:
+        - admin
+        description: posting adverstisement image to main page
+        requestBody:
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                required:
+                - image
+                properties:
+                  image:
+                    type: string
+          required: true
+        response:
+          201:
+            description: Returns the new image_id
+            content: {}
+      get:
+        tags:
+        - admin
+        description: display all image advertisements
+        requestBody:
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                required:
+                - image(s)
+                properties:
+                  image(s):
+                    type: string
+          required: true
+        response:
+          200:
+            description: Returns all new image_id
+            content: {}
+      delete:
+        tags:
+        - admin
+        description: posting adverstisement image to main page
+        requestBody:
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                required:
+                - image_id
+                properties:
+                  image_id:
+                    type: string
+          required: true
+        response:
+          200:
+            description: ok
+            content: {}
+    /api/auth/admin/main_adverstisement/update
+      put: 
+        tags:
+        - admin
+        description: updating certain main adverstisement
+        requestBody:
+          content:
+            application/x-www-form-urlencoded:
+              schema:
+                required:
+                - image_id
+                - new_image
+                properties:
+                  image_id:
+                    type: string
+                  new_image:
+                    type: string
+          required: true
+        response:
+          200:
+            description: Successfully updated
+            content: {}
