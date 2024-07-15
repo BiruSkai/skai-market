@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Nav from "./components/nav/Nav";
 import Home from "./components/home/Home";
+import MainAdvertisement from "./components/admin/MainAdvertisement";
 
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
         <Nav />
         <div>
           <Switch>
-            <Route path="/" component={Home}></Route>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/admin/main_advertisement" component={MainAdvertisement} />
           </Switch>
         </div>
       </div>
