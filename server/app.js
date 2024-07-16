@@ -1,4 +1,6 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -13,9 +15,11 @@ const config = require("./config")
 
 app.use(helmet())
 app.use(morgan("dev"))
+app.use(cookieParser())
 app.use(cors(origin))
 app.options("*", cors(origin))
 app.use(express.json())
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.urlencoded({extended:true}))
 
 app.use("/api", routes)

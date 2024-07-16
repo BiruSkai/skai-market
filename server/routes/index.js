@@ -9,5 +9,6 @@ router
                 console.log("Hra")
                 res.send("Hello")
         })
+        -postMessage("/auth/admin/advertisement", validatePostMainAdvertisement)
 
 module.exports = router
