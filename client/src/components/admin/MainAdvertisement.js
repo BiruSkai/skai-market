@@ -12,11 +12,11 @@ const MainAdvertisement = () => {
         const onSubmit = async data => {
                 try {
                         const response = await apiAxios.post(
-                                "",
+                                "api//auth/admin/advertisement",
                                 {
-                                        imageAd: data. ,
-                                        title: data. ,
-                                        description: data. ,
+                                        imageAd: data.imageAd,
+                                        title: data.title,
+                                        description: data.description,
                                 },
                                 {withCredentials: true})
                         if (response.status === 200) {
