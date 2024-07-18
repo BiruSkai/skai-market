@@ -1,6 +1,10 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const { getHashedPass } = require("../services/auth_service");
+const { userService, cartService } = require("../services");
+const { createUser } = userService;
+const { cartService } = cartService;
+
 
 
 const signupUser = async (req, res, next) => {

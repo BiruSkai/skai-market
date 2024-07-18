@@ -46,3 +46,12 @@ CREATE TABLE order_products (
         price decimal(10,2),
         primary key (order_id, product_id)
 );
+
+CREATE TABLE main_advertisements (
+        id serial primary key,
+        img_url varchar not null,
+        title varchar(20) not null,
+        description varchar(50) not null,
+        created_on timestamp default now(),
+        user_id varchar(3) not null
+);
