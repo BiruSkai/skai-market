@@ -7,25 +7,27 @@ import apiAxios from "../../config/axiosConfig"
 
 const MainAdvertisement = () => {
         const { register, handleSubmit, formState } = useForm() 
-        const [LoginMsg, setLoginMsg] = useState("")
+        const [msg, setMsg] = useState("")
 
         const onSubmit = async data => {
                 try {
                         const response = await apiAxios.post(
-                                "api//auth/admin/advertisement",
+                                "/auth/admin/advertisement",
                                 {
                                         imageAd: data.imageAd,
                                         title: data.title,
                                         description: data.description,
-                                },
-                                {withCredentials: true})
+                                }
+                                // {withCredentials: true}
+                        )
+                        console.log("response: ", response)
                         if (response.status === 200) {
-
+                                setMsg("A new advertisement has been added.")
                         }
                 } catch (error) {
                         console.log(`MainAdv.js error: ${error}`)
                         const errorMsg = error.response.data.error ? error.response.data.error.message : "An error occurred."
-                        setLoginMsg(errorMsg)
+                        setMsg(errorMsg)
                 }
         }
         
@@ -51,6 +53,7 @@ const MainAdvertisement = () => {
                                 </div>
                                 <button type="submit" className="btn btn-primary">Submit</button>
                         </form>
+                        {msg && <div className="m-e">{msg}</div>}
                 </div>
          );
 }
