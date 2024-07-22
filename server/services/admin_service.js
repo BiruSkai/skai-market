@@ -1,9 +1,9 @@
 const { newMainAdvertisementDb } = require("../db")
 
 
-const createMainAdvertisement = async (data) => {
-        console.log("admin_service: ",data)
-        return await newMainAdvertisementDb(data)
+const createMainAdvertisement = async (userInput) => {
+        console.log("admin_service: ",userInput)
+        return await newMainAdvertisementDb(userInput)
 }
 
 

@@ -4,9 +4,10 @@ const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
+require("dotenv").config({path:"../.env"})
 const origin = {
         origin: process.env.CORS_ORIGIN,
-        credentials: true
+        // credentials: true
 }
 const app = express();
 const routes = require("./routes")
@@ -17,7 +18,7 @@ app.use(helmet())
 app.use(morgan("dev"))
 app.use(cookieParser())
 app.use(cors(origin))
-app.options("*", cors(origin))
+// app.options("*", cors(origin))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
