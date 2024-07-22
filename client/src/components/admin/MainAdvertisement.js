@@ -10,8 +10,7 @@ const MainAdvertisement = () => {
         const [msg, setMsg] = useState("")
 
         const onSubmit = async data => {
-                try {
-                        console.log(data)
+                try {   
                         const response = await apiAxios.post(
                                 "/auth/admin/advertisement",
                                 {
@@ -19,10 +18,9 @@ const MainAdvertisement = () => {
                                         title: data.title,
                                         description: data.description,
                                 }
-                                
                                 // {withCredentials: true}
                         )
-                        console.log("response: ", response)
+
                         if (response.status === 200) {
                                 setMsg("A new advertisement has been added.")
                         }

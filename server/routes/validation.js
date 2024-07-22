@@ -10,7 +10,7 @@ const validatePostMainAdvertisement = [
                 if (!errors.isEmpty()) {
                         return res.json({errors:errors.array()})
                 }
-                else next();
+                next();
         }
 ]
 

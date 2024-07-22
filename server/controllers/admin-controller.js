@@ -7,12 +7,10 @@ const newMainAdvertisement = async (req, res, next) => {
         const userInput = {
                 imageAd, title, description, user_id:1
         }
-        console.log("admin-contr1: ", data)
 
         const data = await createMainAdvertisement(userInput)
-        console.log("admin-contr: ", data)
         return res.json({
-                data: data
+                data
         })
 }
 
