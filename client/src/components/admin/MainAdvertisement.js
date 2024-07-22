@@ -11,6 +11,7 @@ const MainAdvertisement = () => {
 
         const onSubmit = async data => {
                 try {
+                        console.log(data)
                         const response = await apiAxios.post(
                                 "/auth/admin/advertisement",
                                 {
@@ -18,6 +19,7 @@ const MainAdvertisement = () => {
                                         title: data.title,
                                         description: data.description,
                                 }
+                                
                                 // {withCredentials: true}
                         )
                         console.log("response: ", response)
