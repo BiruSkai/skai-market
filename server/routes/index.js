@@ -8,6 +8,7 @@ const router = new Router();
 
 // router.post("/auth/user_register", validateNewUser, auth.signupUser)
 router
+        .get("/admin/advertisement", admin.fetchAllMainAdvertisement)
         .post("/auth/admin/advertisement", validatePostMainAdvertisement, admin.newMainAdvertisement)
 
 

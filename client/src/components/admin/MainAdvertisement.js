@@ -3,11 +3,18 @@ import { useForm } from "react-hook-form"
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import apiAxios from "../../config/axiosConfig"
+import { fetchAllMainAdvertisement, selectAdminAllAdvertisement, selectFetchAdminAllAdvertisementStatus } from "../../features/admin/advertisementSlice"
 
 
 const MainAdvertisement = () => {
+        
+        const adminAdvertisement = useSelector(selectAdminAllAdvertisement)
+        const adminAdvertisementStatus = useSelector(selectFetchAdminAllAdvertisementStatus)
+
         const { register, handleSubmit, formState } = useForm() 
         const [msg, setMsg] = useState("")
+
+       
 
         const onSubmit = async data => {
                 try {   
@@ -53,7 +60,12 @@ const MainAdvertisement = () => {
                                 </div>
                                 <button type="submit" className="btn btn-primary">Submit</button>
                         </form>
-                        {msg && <div className="m-e">{msg}</div>}
+                        {msg && <div className="my-3">{msg}</div>}
+                        <hr />
+                        <div className="m3">
+                                <h1>Advertisements in Database:</h1>
+
+                        </div>
                 </div>
          );
 }
