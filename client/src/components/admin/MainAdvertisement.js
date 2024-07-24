@@ -4,21 +4,32 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import apiAxios from "../../config/axiosConfig"
 import { fetchAllMainAdvertisement, selectAdminAllAdvertisement, selectFetchAdminAllAdvertisementStatus } from "../../features/admin/advertisementSlice"
+import CardItem from "../etc/CardItem"
 
 
 const MainAdvertisement = () => {
         const dispatch = useDispatch()
+        const { register, handleSubmit, formState } = useForm() 
+        const [msg, setMsg] = useState("")
+        const [data, setData] = useState([])
 
         useEffect(() => {
           dispatch(fetchAllMainAdvertisement())
         }, [dispatch])
         
         const adminAdvertisement = useSelector(selectAdminAllAdvertisement)
-        console.log("adminAd mainAd.js : ", adminAdvertisement)
         const adminAdvertisementStatus = useSelector(selectFetchAdminAllAdvertisementStatus)
 
-        const { register, handleSubmit, formState } = useForm() 
-        const [msg, setMsg] = useState("")
+        useEffect(() => {
+                const slice = Object.keys(adminAdvertisement)
+                const advertisement = slice.map(item => {
+                        <CardItem key={adminAdvertisement[item].id} item={adminAdvertisement[item]} />
+                })
+                setData(advertisement)
+                console.log("postData: ", advertisement)
+        }, [adminAdvertisement])
+
+        
 
         const onSubmit = async data => {
                 try {   
@@ -69,23 +80,13 @@ const MainAdvertisement = () => {
                         <hr />
                         <div className="m3">
                                 <h1>Advertisements in Database:</h1>
-                                {adminAdvertisementStatus === "loading" && <p>Loading...</p>}
-                                {adminAdvertisementStatus === "failed" && <p>Advertisement upload failed.</p>}
-
-                                {adminAdvertisementStatus === "succeeded" && !adminAdvertisement.length ? adminAdvertisement.map(item => {
-                                        <div class="card" style="width: 18rem;">
-                                                <img src={item.img_url} class="card-img-top" alt="adminAdvertisementImage" />
-                                                <div class="card-body">
-                                                        <h5 class="card-title">{item.title}</h5>
-                                                        <p class="card-text">{item.description}</p>
-                                                        <a href="#" class="btn btn-primary">Update</a>
-                                                        <a href="#" class="btn btn-primary">Delete</a>
-                                                </div>
-                                        </div>
-                                }) : <p>No Advertisement</p>}
+                                { adminAdvertisementStatus === "loading" && <p>Loading...</p> }
+                                { adminAdvertisementStatus === "failed" && <p>Advertisement upload failed.</p> }
+                                { adminAdvertisementStatus === "succeeded" && data.length ? data : <p>No Advertisement</p> }
                         </div>
                 </div>
          );
 }
  
+
 export default MainAdvertisement;

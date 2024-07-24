@@ -6,17 +6,14 @@ import apiAxios from "../../config/axiosConfig";
 export const fetchAllMainAdvertisement= createAsyncThunk("admin/fetchAllMainAdvertisement", async () => {
         try {
                 const response = await apiAxios.get("/admin/advertisement")
-                console.log("adSlice: ", response.data)
                 const advertisement = {}
                 response.data.forEach(item => {
                         advertisement[item.id] = item
                 })
-                console.log("adSlice2 return: ", advertisement)
                 return advertisement
         } catch (err) {
                 return err.message
         }
-        
 })
 
 const advertisementSlice = createSlice({

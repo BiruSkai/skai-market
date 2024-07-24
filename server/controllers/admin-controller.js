@@ -18,7 +18,6 @@ const newMainAdvertisement = async (req, res, next) => {
 
 const getAllMainAdvertisement = async (req, res, next) => {
         const data = await fetchAllMainAdvertisement()
-        console.log("admin-contr-fetchAllAd: ", data)
         res.status(200).send(data)
         next()
 }
