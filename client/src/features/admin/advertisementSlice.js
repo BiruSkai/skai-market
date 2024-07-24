@@ -1,24 +1,33 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apiAxios } from "../../config/axiosConfig";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import apiAxios from "../../config/axiosConfig";
 
-export const fetchAllMainAdvertisement = createAsyncThunk("/admin/fetchAllMainAdvertisement", async () => {
-        const response = await apiAxios.get("admin/advertisement")
-        console.log("adSlice: ", response)
-        const advertisement = {}
-        response.data.forEach(item => {
-                advertisement[item.id] = item
-        })
-        return advertisement
+
+
+export const fetchAllMainAdvertisement= createAsyncThunk("admin/fetchAllMainAdvertisement", async () => {
+        try {
+                const response = await apiAxios.get("/admin/advertisement")
+                console.log("adSlice: ", response.data)
+                const advertisement = {}
+                response.data.forEach(item => {
+                        advertisement[item.id] = item
+                })
+                console.log("adSlice2 return: ", advertisement)
+                return advertisement
+        } catch (err) {
+                return err.message
+        }
+        
 })
 
-export const adverstisementSlice = createSlice({
-        name: "adminMainAdvertisement",
+const advertisementSlice = createSlice({
+        name: "admin",
         initialState: {
                 fetchAllMainAdvertisementStatus: "idle",
-                adminAllAdvertisement: {}
+                adminAllAdvertisement: []
         },
         extraReducers: (builder) => {
                 // Reducers for fetching adminMainAdverstisement
+                
                 builder
                         .addCase(fetchAllMainAdvertisement.pending, (state, action) => {
                                 state.fetchAllMainAdvertisementStatus = "loading"
@@ -26,6 +35,7 @@ export const adverstisementSlice = createSlice({
                         .addCase(fetchAllMainAdvertisement.fulfilled, (state, action) => {
                                 state.fetchAllMainAdvertisementStatus = "succeeded"
                                 state.adminAllAdvertisement = action.payload
+                                console.log(state.adminAllAdvertisement)
                         })
                         .addCase(fetchAllMainAdvertisement.rejected, (state, action) => {
                                 state.fetchAllMainAdvertisementStatus = "failed"
@@ -34,8 +44,8 @@ export const adverstisementSlice = createSlice({
 })
 
 
-export const selectAdminAllAdvertisement = state => state.adminMainAdvertisement.allAdvertisement
+export const selectAdminAllAdvertisement = state => state.adminMainAdvertisement.adminAllAdvertisement
 export const selectAdminAdvertisementById = (state, advertisementId) => state.adminMainAdvertisement.adminAllAdvertisement[advertisementId]
 export const selectFetchAdminAllAdvertisementStatus = state => state.adminMainAdvertisement.fetchAllMainAdvertisementStatus
 
-export default adverstisementSlice.reducer
+export default advertisementSlice.reducer

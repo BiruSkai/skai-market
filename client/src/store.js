@@ -1,9 +1,9 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
+import { configureStore } from "@reduxjs/toolkit"
 import adminAdvertisementReducer from "./features/admin/advertisementSlice"
 
 
-export default configureStore({
+export const store = configureStore({
         reducer: {
-                admin: adminAdvertisementReducer
+                adminMainAdvertisement: adminAdvertisementReducer
         }
 })

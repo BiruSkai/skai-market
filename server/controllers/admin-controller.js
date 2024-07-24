@@ -1,5 +1,5 @@
-const { adminService } = require("../service").
-const { createMainAdvertisement, getAllMainAdvertisement } = adminService
+const { adminService } = require("../services")
+const { createMainAdvertisement, fetchAllMainAdvertisement } = adminService
 
 
 const newMainAdvertisement = async (req, res, next) => {
@@ -16,14 +16,15 @@ const newMainAdvertisement = async (req, res, next) => {
         })
 }
 
-const fetchAllMainAdvertisement = async (req, res, next) => {
-        const data = await getAllMainAdvertisement
+const getAllMainAdvertisement = async (req, res, next) => {
+        const data = await fetchAllMainAdvertisement()
         console.log("admin-contr-fetchAllAd: ", data)
-        return data
+        res.status(200).send(data)
+        next()
 }
 
 
 module.exports = {
         newMainAdvertisement,
-        fetchAllMainAdvertisement,
+        getAllMainAdvertisement,
 }

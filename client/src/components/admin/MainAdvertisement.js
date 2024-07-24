@@ -1,20 +1,24 @@
 import "./admin.css"
 import { useForm } from "react-hook-form"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import apiAxios from "../../config/axiosConfig"
 import { fetchAllMainAdvertisement, selectAdminAllAdvertisement, selectFetchAdminAllAdvertisementStatus } from "../../features/admin/advertisementSlice"
 
 
 const MainAdvertisement = () => {
+        const dispatch = useDispatch()
+
+        useEffect(() => {
+          dispatch(fetchAllMainAdvertisement())
+        }, [dispatch])
         
         const adminAdvertisement = useSelector(selectAdminAllAdvertisement)
+        console.log("adminAd mainAd.js : ", adminAdvertisement)
         const adminAdvertisementStatus = useSelector(selectFetchAdminAllAdvertisementStatus)
 
         const { register, handleSubmit, formState } = useForm() 
         const [msg, setMsg] = useState("")
-
-       
 
         const onSubmit = async data => {
                 try {   
@@ -38,6 +42,7 @@ const MainAdvertisement = () => {
                 }
         }
         
+
         return ( 
                 <div className="container my-3">
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +69,20 @@ const MainAdvertisement = () => {
                         <hr />
                         <div className="m3">
                                 <h1>Advertisements in Database:</h1>
+                                {adminAdvertisementStatus === "loading" && <p>Loading...</p>}
+                                {adminAdvertisementStatus === "failed" && <p>Advertisement upload failed.</p>}
 
+                                {adminAdvertisementStatus === "succeeded" && !adminAdvertisement.length ? adminAdvertisement.map(item => {
+                                        <div class="card" style="width: 18rem;">
+                                                <img src={item.img_url} class="card-img-top" alt="adminAdvertisementImage" />
+                                                <div class="card-body">
+                                                        <h5 class="card-title">{item.title}</h5>
+                                                        <p class="card-text">{item.description}</p>
+                                                        <a href="#" class="btn btn-primary">Update</a>
+                                                        <a href="#" class="btn btn-primary">Delete</a>
+                                                </div>
+                                        </div>
+                                }) : <p>No Advertisement</p>}
                         </div>
                 </div>
          );

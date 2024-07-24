@@ -11,14 +11,13 @@ const newMainAdvertisementDb = async (userInput) => {
         return res.rows[0]
 }
 
-const getAllMainAdverstisementDb = async () => {
-        const res = await pool.query(`SELECT * FROM main_adverstisements`)
-        console.log("admin_db_get: ", res)
-        return res
+const fetchAllMainAdvertisementDb = async () => {
+        const res = await pool.query(`SELECT * FROM main_advertisements`)
+        return res.rows
 }
 
 
 module.exports = {
         newMainAdvertisementDb,
-        getAllMainAdverstisementDb
+        fetchAllMainAdvertisementDb
 }
