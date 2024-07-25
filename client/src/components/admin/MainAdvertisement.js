@@ -22,11 +22,10 @@ const MainAdvertisement = () => {
 
         useEffect(() => {
                 const slice = Object.keys(adminAdvertisement)
-                const advertisement = slice.map(item => {
+                const advertisement = slice.map(item => 
                         <CardItem key={adminAdvertisement[item].id} item={adminAdvertisement[item]} />
-                })
+                )
                 setData(advertisement)
-                console.log("postData: ", advertisement)
         }, [adminAdvertisement])
 
         
@@ -47,7 +46,6 @@ const MainAdvertisement = () => {
                                 setMsg("A new advertisement has been added.")
                         }
                 } catch (error) {
-                        console.log(`MainAdv.js error: ${error}`)
                         const errorMsg = error.response.data.error ? error.response.data.error.message : "An error occurred."
                         setMsg(errorMsg)
                 }
@@ -79,10 +77,14 @@ const MainAdvertisement = () => {
                         {msg && <div className="my-3">{msg}</div>}
                         <hr />
                         <div className="m3">
-                                <h1>Advertisements in Database:</h1>
+                                <h3>Advertisements in Database:</h3>
                                 { adminAdvertisementStatus === "loading" && <p>Loading...</p> }
                                 { adminAdvertisementStatus === "failed" && <p>Advertisement upload failed.</p> }
-                                { adminAdvertisementStatus === "succeeded" && data.length ? data : <p>No Advertisement</p> }
+                                { adminAdvertisementStatus === "succeeded" && data.length ? 
+                                        <div className="d-flex flex-column flex-md-row">
+                                                {data}
+                                        </div>
+                                         : <p>No Advertisement</p> }
                         </div>
                 </div>
          );
