@@ -1,4 +1,4 @@
-const { newMainAdvertisementDb, fetchAllMainAdvertisementDb } = require("../db")
+const { newMainAdvertisementDb, fetchAllMainAdvertisementDb, deleteAdminAdDb } = require("../db")
 
 
 const createMainAdvertisement = async (userInput) => {
@@ -9,7 +9,12 @@ const fetchAllMainAdvertisement = async () => {
         return await fetchAllMainAdvertisementDb()
 }
 
+const deleteAdminAdService = async (id) => {
+        return await deleteAdminAdDb(id)
+}
+
 module.exports = {
         createMainAdvertisement,
-        fetchAllMainAdvertisement
+        fetchAllMainAdvertisement,
+        deleteAdminAdService
 }

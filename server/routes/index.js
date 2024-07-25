@@ -10,6 +10,7 @@ const router = new Router();
 router
         .get("/admin/advertisement", admin.getAllMainAdvertisement)
         .post("/auth/admin/advertisement", validatePostMainAdvertisement, admin.newMainAdvertisement)
+        .delete("/admin/advertisement/:id", admin.deleteAdminAd)
 
 
 module.exports = router

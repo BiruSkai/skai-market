@@ -16,8 +16,13 @@ const fetchAllMainAdvertisementDb = async () => {
         return res.rows
 }
 
-
+const deleteAdminAdDb = async (id) => {
+        const res = await pool.query(`DELETE FROM main_advertisements WHERE id=$1`, [id])
+        return res
+}
+ 
 module.exports = {
         newMainAdvertisementDb,
-        fetchAllMainAdvertisementDb
+        fetchAllMainAdvertisementDb,
+        deleteAdminAdDb
 }

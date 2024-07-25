@@ -78,13 +78,15 @@ const MainAdvertisement = () => {
                         <hr />
                         <div className="m3">
                                 <h3>Advertisements in Database:</h3>
+
                                 { adminAdvertisementStatus === "loading" && <p>Loading...</p> }
                                 { adminAdvertisementStatus === "failed" && <p>Advertisement upload failed.</p> }
-                                { adminAdvertisementStatus === "succeeded" && data.length ? 
+                                { adminAdvertisementStatus === "succeeded" && data.length ? (
                                         <div className="d-flex flex-column flex-md-row">
                                                 {data}
-                                        </div>
-                                         : <p>No Advertisement</p> }
+                                        </div>) : <p>No Advertisement</p>
+                                }
+                                        
                         </div>
                 </div>
          );

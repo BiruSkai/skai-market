@@ -1,5 +1,5 @@
 const { adminService } = require("../services")
-const { createMainAdvertisement, fetchAllMainAdvertisement } = adminService
+const { createMainAdvertisement, fetchAllMainAdvertisement, deleteAdminAdService } = adminService
 
 
 const newMainAdvertisement = async (req, res, next) => {
@@ -10,7 +10,6 @@ const newMainAdvertisement = async (req, res, next) => {
         }
 
         const data = await createMainAdvertisement(userInput)
-        console.log("admin-contr-createAd: ", data)
         return res.json({
                 data
         })
@@ -22,8 +21,16 @@ const getAllMainAdvertisement = async (req, res, next) => {
         next()
 }
 
+const deleteAdminAd = async (req, res, next) => {
+        const {id} = req.params
+        const data = await deleteAdminAdService(id)
+        res.status(200).send(data)
+        next()
+}
+
 
 module.exports = {
         newMainAdvertisement,
         getAllMainAdvertisement,
+        deleteAdminAd,
 }

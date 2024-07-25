@@ -1,5 +1,10 @@
 .fishIcon {
-        background-image: url("../../images/fish.png");
+        font-weight:900;
+        color:green;
+        letter-spacing: 1vw;
+        background-image:  linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("../../images/fish.png");
         background-position: center;
         background-repeat: none;
+        width: 100%;
+        text-align: center;
 }
