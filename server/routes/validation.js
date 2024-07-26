@@ -1,7 +1,8 @@
 const { check, validationResult } = require("express-validator");
 
 
-const validatePostMainAdvertisement = [
+const validateFormMainAdvertisement = [
+        check("id").isString(),
         check("imageAd").not().isEmpty(),
         check("title").not().isEmpty().isLength({max:20}),
         check("description").not().isEmpty().isLength({max:50}),
@@ -29,6 +30,6 @@ const validateNewUser = [
 
 
 module.exports = {
-        validatePostMainAdvertisement,
+        validateFormMainAdvertisement,
         validateNewUser
 }

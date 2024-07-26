@@ -53,5 +53,17 @@ CREATE TABLE main_advertisements (
         title varchar(20) not null,
         description varchar(50) not null,
         created_on timestamp default now(),
+        updated_on timestamp default now(),
         user_id varchar(3) not null
 );
+
+-- Function, Trigger
+CREATE OR REPLACE FUNCTION update_modified_column()
+RETURNS TRIGGER AS $$
+BEGIN
+NEW.updated_on = now();
+RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_modified_time BEFORE UPDATE ON main_advertisements FOR EACH ROW EXECUTE PROCEDURE update_modified_column();

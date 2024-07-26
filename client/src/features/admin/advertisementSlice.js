@@ -16,11 +16,17 @@ export const fetchAllMainAdvertisement= createAsyncThunk("admin/fetchAllMainAdve
         }
 })
 
-const advertisementSlice = createSlice({
+const adminAdvertisementSlice = createSlice({
         name: "admin",
         initialState: {
                 fetchAllMainAdvertisementStatus: "idle",
-                adminAllAdvertisement: []
+                adminAllAdvertisement: [],
+                currentAdData: {}
+        },
+        reducers: {
+                adminAdData (state, action) {
+                        state.currentAdData = action.payload
+                }
         },
         extraReducers: (builder) => {
                 // Reducers for fetching adminMainAdverstisement
@@ -41,8 +47,11 @@ const advertisementSlice = createSlice({
 })
 
 
+export const {adminAdData} = adminAdvertisementSlice.actions
+export const selectAdminAdData = state => state.adminMainAdvertisement.currentAdData
+
 export const selectAdminAllAdvertisement = state => state.adminMainAdvertisement.adminAllAdvertisement
 export const selectAdminAdvertisementById = (state, advertisementId) => state.adminMainAdvertisement.adminAllAdvertisement[advertisementId]
 export const selectFetchAdminAllAdvertisementStatus = state => state.adminMainAdvertisement.fetchAllMainAdvertisementStatus
 
-export default advertisementSlice.reducer
+export default adminAdvertisementSlice.reducer

@@ -3,10 +3,10 @@ const { createMainAdvertisement, fetchAllMainAdvertisement, deleteAdminAdService
 
 
 const newMainAdvertisement = async (req, res, next) => {
-        const {imageAd, title, description} = req.body
-
+        const {method, imageAd, title, description} = req.body
+        const ad_id = req.params.id
         const userInput = {
-                imageAd, title, description, user_id:1
+                method, ad_id, imageAd, title, description, user_id:1
         }
 
         const data = await createMainAdvertisement(userInput)
