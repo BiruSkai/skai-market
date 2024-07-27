@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Link } from "react-router-dom"
 import "./cardItem.css"
 import apiAxios from "../../config/axiosConfig"
@@ -6,15 +5,14 @@ import { useDispatch } from "react-redux"
 import { adminAdData } from "../../features/admin/advertisementSlice"
 
 
-const CardItem = ({item}) => {
-        const [msg, setMsg] = useState("")
+const CardItem = ({item,msg,setMsg}) => {
         const {id, img_url, title, description} = item
         const dispatch = useDispatch()
-
+        
         const onDelete = async () => {
                 try {
                         const response = await apiAxios.delete(`/admin/advertisement/${item.id}`)
-                        if (response === 200) {
+                        if (response.status === 200) {
                                 setMsg(`Advertisement id: ${item.id} has been deleted.`)
                         }
                 } catch (error) {

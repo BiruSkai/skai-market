@@ -2,7 +2,6 @@ const { check, validationResult } = require("express-validator");
 
 
 const validateFormMainAdvertisement = [
-        check("id").isString(),
         check("imageAd").not().isEmpty(),
         check("title").not().isEmpty().isLength({max:20}),
         check("description").not().isEmpty().isLength({max:50}),

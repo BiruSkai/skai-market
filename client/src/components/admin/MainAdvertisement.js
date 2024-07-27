@@ -12,27 +12,28 @@ const MainAdvertisement = () => {
 
         const dispatch = useDispatch()
         const [data, setData] = useState([])
+        const [msg, setMsg] = useState("")
 
         useEffect(() => {
-          dispatch(fetchAllMainAdvertisement())
-        }, [dispatch])
+                dispatch(fetchAllMainAdvertisement())
+        }, [dispatch, msg])
         
         const adminAdvertisement = useSelector(selectAdminAllAdvertisement)
         const adminAdvertisementStatus = useSelector(selectFetchAdminAllAdvertisementStatus)
 
         useEffect(() => {
                 const slice = Object.keys(adminAdvertisement)
-                const advertisement = slice.map(item => 
-                        <CardItem key={adminAdvertisement[item].id} item={adminAdvertisement[item]} />
+                const data = slice.map(item => 
+                        <CardItem key={adminAdvertisement[item].id} item={adminAdvertisement[item]} setMsg={setMsg} />
                 )
-                setData(advertisement)
+                setData(data)
         }, [adminAdvertisement])
-
+        
+        
 //Register Form
-        const { register, handleSubmit, formState } = useForm() 
-        const [msg, setMsg] = useState("")
+        const { register, handleSubmit, reset, formState, formState:{isSubmitSuccessful} } = useForm() 
 
-        const onSubmit = async data => {
+        const onCreate = async data => {
                 try {   
                         const response = await apiAxios.post(
                                 "/auth/admin/advertisement",
@@ -53,14 +54,20 @@ const MainAdvertisement = () => {
                         setMsg(errorMsg)
                 }
         }
+
+        useEffect(() => {
+                if (formState.isSubmitSuccessful) {
+                        reset({imageAd:"", title:"", description:""})
+                }
+        }, [formState, isSubmitSuccessful])
         
 
         return ( 
                 <div className="container my-3">
-                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmit(onCreate)}>
                                 <AdminAdvertisementForm register={register} formState={formState} buttonType="Create"/>
                         </form>
-                        {msg && <div className="my-3">{msg}</div>}
+                        { msg && <div className="my-3">{msg}</div> }
                         <hr />
 
                         <div className="m3">

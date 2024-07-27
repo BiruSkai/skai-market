@@ -3,11 +3,13 @@ import apiAxios from "../../config/axiosConfig"
 import { useForm } from "react-hook-form"
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom"
 import { selectAdminAdData } from "../../features/admin/advertisementSlice";
 
 
 const AdminAdvertisementUpdate = () => {
-
+        const history = useHistory()
+        const [msg, setMsg] = useState("")
         const currentData = useSelector(selectAdminAdData)
 
         const { register, handleSubmit, formState } = useForm({
@@ -18,8 +20,6 @@ const AdminAdvertisementUpdate = () => {
                         description: currentData.description 
                 }
         }) 
-
-        const [msg, setMsg] = useState("")
 
         const onUpdate = async data => {
                 try {   
@@ -35,7 +35,7 @@ const AdminAdvertisementUpdate = () => {
                         )
 
                         if (response.status === 200) {
-                                setMsg("The advertisement has been updated.")
+                                return history.push("/admin/advertisement")
                         }
                 } catch (error) {
                         const errorMsg = error.response.data.error ? error.response.data.error.message : "An error occurred."
@@ -45,7 +45,7 @@ const AdminAdvertisementUpdate = () => {
 
 
         return (
-                <div className="container m-3">
+                <div className="container my-3">
                         <h3>Update Admin Advertisement: </h3>
                         <form onSubmit={handleSubmit(onUpdate)}>
                                 <AdminAdvertisementForm register={register} formState={formState} buttonType="Update" />

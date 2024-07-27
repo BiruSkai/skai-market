@@ -38,7 +38,6 @@ const adminAdvertisementSlice = createSlice({
                         .addCase(fetchAllMainAdvertisement.fulfilled, (state, action) => {
                                 state.fetchAllMainAdvertisementStatus = "succeeded"
                                 state.adminAllAdvertisement = action.payload
-                                console.log(state.adminAllAdvertisement)
                         })
                         .addCase(fetchAllMainAdvertisement.rejected, (state, action) => {
                                 state.fetchAllMainAdvertisementStatus = "failed"

@@ -4,7 +4,7 @@ const AdminAdvertisementForm = ({register, formState, buttonType}) => {
 
         return ( 
                 <div>        
-                        <input className="form-control" type="hidden" multiple {...register("id", {required:true})} />
+                        <input className="form-control" type="hidden" multiple {...register("id")} />
                         
                         <div className="mb-3">
                                 <label htmlFor="imageAd" className="form-label">Images URL for main advertisement</label>
