@@ -15,7 +15,6 @@ const Home = () => {
         
         const adminAdvertisement = useSelector(selectAdminAllAdvertisement)
         const adminAdvertisementStatus = useSelector(selectFetchAdminAllAdvertisementStatus)
-        // console.log("qqq ", adminAdvertisement, adminAdvertisementStatus)
 
         useEffect(() => {
                 const data = Object.keys(adminAdvertisement)
@@ -25,7 +24,6 @@ const Home = () => {
 
         return ( 
                 <div className="container mt-4">
-                
                         <Carousel items={adminAdvertisement} idArray={idArray} status={status} />
                 </div>
          );
