@@ -24,7 +24,7 @@ const CardItem = ({item,msg,setMsg}) => {
         }
         
         return ( 
-                <div className="card m-md-3" >
+                <div className="card shadow m-3 bg-body rounded" >
                         <img src={img_url} className="card-img-top" alt="adminAdvertisementImage" />
                         <div className="card-body cardItemButton">
                                 <h5 className="card-title">{title}</h5>

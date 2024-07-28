@@ -1,10 +1,11 @@
-import AdminAdvertisementForm from "./AdminAdvertisementForm";
+import AdminAdvertisementForm from "./AdminAdvertisementForm"
 import apiAxios from "../../config/axiosConfig"
 import { useForm } from "react-hook-form"
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react"
+import { useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { selectAdminAdData } from "../../features/admin/advertisementSlice";
+import { selectAdminAdData } from "../../features/admin/advertisementSlice"
+import "./admin.css"
 
 
 const AdminAdvertisementUpdate = () => {
@@ -50,7 +51,7 @@ const AdminAdvertisementUpdate = () => {
                         <form onSubmit={handleSubmit(onUpdate)}>
                                 <AdminAdvertisementForm register={register} formState={formState} buttonType="Update" />
                         </form> 
-                        {msg && <div className="my-3">{msg}</div>}
+                        {msg && <div className="my-3 note">{msg}</div>}
                 </div>
          );
 }

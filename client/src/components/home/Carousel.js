@@ -1,27 +1,58 @@
-const Carousel = () => {
+import { useEffect, useState } from "react"
+
+
+const Carousel = ({items, idArray, status}) => {
+
+        const [page, setPage] = useState(0)
+       
+        const idArrayLength = idArray.length
+        const indexArray = []
+        for (let x=0; x<idArrayLength; x++) {
+                indexArray.push(x)
+        }
+  
+        const onActive = (move) => {
+                switch(move) {
+                        case "prev":
+                                setPage((parseInt(page) - 1) % idArrayLength)
+                                break;
+                        case "next":
+                                setPage((parseInt(page) + 1) % idArrayLength)
+                                break;
+                        default:
+                                setPage(0)
+               }  
+        }
+
         return ( 
-                <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
+                <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-interval="10000" data-bs-ride="carousel ">
                         <div className="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        { indexArray.map( id => {
+                                return (
+                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to={id} className={`${id === indexArray[page] ? "active" : ""}`} aria-current="true" aria-label={`Slide ${id}`}></button>
+                                )
+                        })}
                         </div>
                         <div className="carousel-inner">
-                                <div className="carousel-item active" data-bs-interval="10000">
-                                        <img src="..." className="d-block w-100" alt="carousel-image" />
-                                        <div className="carousel-caption d-none d-md-block">
-                                                <h5>First slide label</h5>
-                                                <p>Some representative placeholder content for the first slide.</p>
+                        { status === "succeeded" && idArray.map(id => {
+                                return (
+                                        <div className={`arousel-item ${id === idArray[page] ? "active" : ""}`} key={items[id].id}>
+                                                <img src={items[id].img_url} className="d-block w-100" alt="carousel-image" />
+                                                <div className="carousel-caption d-none d-md-block">
+                                                        <h5>{items[id].title}</h5>
+                                                        <p>{items[id].description}</p>
+                                                </div>
                                         </div>
-                                </div>
+                                )
+                        })}
                         </div>
                         <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Previous</span>
+                                <span className="visually-hidden" onClick={() => onActive("prev")}>Previous</span>
                         </button>
                         <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
                                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Next</span>
+                                <span className="visually-hidden" onClick={() => onActive("next")}>Next</span>
                         </button>
                 </div>
          );
