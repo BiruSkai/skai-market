@@ -8,3 +8,23 @@
         width: 100%;
         text-align: center;
 }
+
+.navMd {
+        background-image:  linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("../../images/fish.png");
+        background-position: center;
+        background-repeat: none;
+        width: 100%;
+}
+
+.navItemMd {
+        text-decoration: none;
+        padding: 0 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: black;
+}
+
+.navItemMd:hover {
+        text-decoration: underline;
+        border-bottom-color: black;
+}

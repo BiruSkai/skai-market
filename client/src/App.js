@@ -16,6 +16,8 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/admin/advertisement" component={MainAdvertisement} />
             <Route exact path="/admin/advertisement/:id" component={AdminAdvertisementUpdate} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
           </Switch>
         </div>
       </div>
