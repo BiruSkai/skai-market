@@ -23,8 +23,8 @@ const Nav = () => {
                                         <i class="bi bi-door-open"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <Link to="#" class="dropdown-item">Login</Link>
-                                        <Link to="#" class="dropdown-item">Register</Link>
+                                        <Link to="/login" class="dropdown-item">Login</Link>
+                                        <Link to="/register" class="dropdown-item">Register</Link>
                                 </ul>
                         </div>  
                 
@@ -38,8 +38,8 @@ const Nav = () => {
                                         <Link to="#" className="navItemMd">Categories</Link>
                                 </div>
                                 <div clsas="d-flex align-items-center">
-                                        <Link to="#" className="navItemMd">Login</Link>
-                                        <Link to="#" className="navItemMd">Register</Link>
+                                        <Link to="/login" className="navItemMd">Login</Link>
+                                        <Link to="/register" className="navItemMd">Register</Link>
                                 </div>
                         </div>  
                 </div>

@@ -5,5 +5,9 @@ import adminAdvertisementReducer from "./features/admin/advertisementSlice"
 export const store = configureStore({
         reducer: {
                 adminMainAdvertisement: adminAdvertisementReducer
-        }
+        },
+        middleware: (getDefaultMiddleware) => 
+                getDefaultMiddleware({
+                        serializableCheck: false
+                })
 })

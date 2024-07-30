@@ -3,6 +3,9 @@ import Nav from "./components/nav/Nav";
 import Home from "./components/home/Home";
 import MainAdvertisement from "./components/admin/MainAdvertisement";
 import AdminAdvertisementUpdate from "./components/admin/AdminAdvertisementUpdate";
+import Login from "./components/login/Login"
+import Register from "./components/login/Register";
+
 
 
 function App() {

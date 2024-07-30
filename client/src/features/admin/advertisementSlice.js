@@ -39,7 +39,6 @@ const adminAdvertisementSlice = createSlice({
                         .addCase(fetchAllMainAdvertisement.fulfilled, (state, action) => {
                                 state.fetchAllMainAdvertisementStatus = "succeeded"
                                 state.adminAllAdvertisement = action.payload
-                                console.log("slice3: ", state.adminAllAdvertisement)
                         })
                         .addCase(fetchAllMainAdvertisement.rejected, (state, action) => {
                                 state.fetchAllMainAdvertisementStatus = "failed"
@@ -52,8 +51,6 @@ export const {adminAdData} = adminAdvertisementSlice.actions
 export const selectAdminAdData = state => state.adminMainAdvertisement.currentAdData
 
 export const selectAdminAllAdvertisement = state => state.adminMainAdvertisement.adminAllAdvertisement
-console.log("slice2: ", selectAdminAllAdvertisement)
-
 export const selectAdminAdvertisementById = (state, advertisementId) => state.adminMainAdvertisement.adminAllAdvertisement[advertisementId]
 export const selectFetchAdminAllAdvertisementStatus = state => state.adminMainAdvertisement.fetchAllMainAdvertisementStatus
 

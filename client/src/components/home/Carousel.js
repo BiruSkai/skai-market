@@ -31,7 +31,7 @@ const Carousel = ({items, idArray, status}) => {
                         <div className="carousel-indicators">
                         { indexArray.map( id => {
                                 return (
-                                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to={id} className={`${id === indexArray[page] ? "active" : ""}`} aria-current="true" aria-label={`Slide ${id}`}></button>
+                                        <button key={id} type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to={id} className={`${id === indexArray[page] ? "active" : ""}`} aria-current="true" aria-label={`Slide ${id}`}></button>
                                 )
                         })}
                         </div>
