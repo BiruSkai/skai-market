@@ -15,9 +15,12 @@ const validateFormMainAdvertisement = [
 ]
 
 const validateNewUser = [
-        check("email").not().isEmpty().isEmail().isLength({max:30}),
-        check("password").not().isEmpty().isLength({min:6, max:20}),
-        check("username").not().isEmpty().isLength({max:20}),
+        check("email").not().isEmpty().isEmail().isLength({max:35}),
+        check("username").not().isEmpty().isLength({max:10}),
+        check("password").not().isEmpty().isLength({min:5, max:12}),
+        check("address").not().isEmpty().isLength({max:25}),
+        check("city").not().isEmpty().isLength({max:15}),
+        
         (req, res, next) => {
                 const errors = validationResult(req)
                 if (!errors.isEmpty()) {
@@ -27,8 +30,22 @@ const validateNewUser = [
         }
 ]
 
+const validateLogin = [
+        check("email").not().isEmpty().isLength({max:35}),
+        check("password").not().isEmpty().isLength({max:12}),
+        
+        (req, res, next) => {
+                const errors = validationResult(req)
+                if (!errors.isEmpty) {
+                        return res.json({errors: errors.array()})
+                }
+                else next();
+        }
+]
+
 
 module.exports = {
         validateFormMainAdvertisement,
-        validateNewUser
+        validateNewUser,
+        validateLogin
 }

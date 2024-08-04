@@ -6,6 +6,9 @@ CREATE TABLE userdata (
         user_role varchar(10) not null,
         status varchar(10) not null,
         created_on timestamp not null default now()
+        address varchar(25) not null,
+        city varchar(15) not null,
+        updated_on timestamp
 );
 
 CREATE TABLE products (
@@ -53,7 +56,7 @@ CREATE TABLE main_advertisements (
         title varchar(20) not null,
         description varchar(50) not null,
         created_on timestamp default now(),
-        updated_on timestamp default now(),
+        updated_on timestamp,
         user_id varchar(3) not null
 );
 

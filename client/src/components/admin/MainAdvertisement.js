@@ -36,7 +36,7 @@ const MainAdvertisement = () => {
         const onCreate = async data => {
                 try {   
                         const response = await apiAxios.post(
-                                "/auth/admin/advertisement",
+                                "/admin/advertisement",
                                 {
                                         method: "post",
                                         imageAd: data.imageAd,

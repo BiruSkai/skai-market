@@ -25,7 +25,7 @@ const AdminAdvertisementUpdate = () => {
         const onUpdate = async data => {
                 try {   
                         const response = await apiAxios.put(
-                                `/auth/admin/advertisement/${data.id}`,
+                                `/admin/advertisement/${data.id}`,
                                 {
                                         method: "put",
                                         imageAd: data.imageAd,

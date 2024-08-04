@@ -38,14 +38,24 @@ const Login = () => {
                                 <h3>User Login</h3>
                                 <form onSubmit={handleSubmit(onLogin)}>
                                         <div class="form-floating my-3">
-                                                <input type="email" class="form-control" id="floatingInput" {...register("email", {required:true})} />
+                                                <input type="email" class="form-control" id="floatingInput" {
+                                                        ...register("email", {
+                                                                required:true,
+                                                                pattern:{value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i},
+                                                                maxLength:35
+                                                        })} 
+                                                />
                                                 <label for="floatingInput">Email address</label>
                                                 {formState.errors.email?.type === "required" && <p className="note py-2">Email must be filled.</p>}
+                                                {formState.errors.email?.type === "maxLength" && <p className="note py-2">Max 35 characters.</p>}
+                                                {formState.errors.email?.type === "pattern" && <p className="note py-2">Invalid email address.</p>}
                                         </div>
                                         <div class="form-floating">
-                                                <input type="password" class="form-control" id="floatingPassword" {...register("password", {required:true})} />
+                                                <input type="password" class="form-control" id="floatingPassword" {...register("password", {required:true, minLength:5, maxLength:12})} />
                                                 <label for="floatingPassword">Password</label>
                                                 {formState.errors.password?.type === "required" && <p className="note py-2">Password must be filled.</p>}
+                                                {formState.errors.password?.type === "minLength" && <p className="note py-2">Min five characters.</p>}
+                                                {formState.errors.password?.type === "maxLength" && <p className="note py-2">Max twelve characters.</p>}
                                         </div>
                                         <div class="my-3">
                                                 <button class="p-2 btn btn-primary col-12">Login</button>

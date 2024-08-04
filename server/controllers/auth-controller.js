@@ -8,7 +8,7 @@ const { createCart } = cartService;
 
 
 const signupUser = async (req, res, next) => {
-        const {username, password, email} = req.body
+        const {email, username, password, address, city} = req.body
 
         const userDb = await fetchUserPersonalData(email, username)
         if (userDb) {
@@ -16,9 +16,11 @@ const signupUser = async (req, res, next) => {
         }
         const hashedPass = await getHashedPass(password)
         const userdata = {
+                email,
                 username,
                 hashedPass,
-                email,
+                address,
+                city,
                 user_role: "customer",
                 status: "active"
         }
