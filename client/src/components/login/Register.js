@@ -1,15 +1,15 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import apiAxios from "../../config/axiosConfig"
-
+import { useHistory } from "react-router-dom"
 
 const Register = () => {
+        const history = useHistory()
         const [msg, setMsg] = useState("")
         const { register, handleSubmit, formState} = useForm()
         
         const onRegister = async (data) => {
                 try {
-                        console.log("b1: ", data)
                         const response = await apiAxios.post(
                                 "auth/register",
                                 {
@@ -22,10 +22,11 @@ const Register = () => {
                         )
                         if (response.status === 200) {
                                 console.log("register successful")
+                                return history.push("/")
                         }
                 }
                 catch (error) {
-                        console.log("error Register: ", error.response)
+                        console.log("error Register: ", error.response.data.error.message)
                         const errorMsg = error.response.data.error ? error.response.data.error.message : "Registration failed."
                         setMsg(errorMsg)
                 }
@@ -79,7 +80,7 @@ const Register = () => {
                                                 <button class="p-2 btn btn-primary col-12">Register</button>
                                         </div>
                                 </form>                
-                                { msg }
+                                <p className="note">{ msg }</p>
                                 </div>
                         </div>
                         

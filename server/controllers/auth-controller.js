@@ -1,16 +1,16 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { getHashedPass } = require("../services/auth_service");
-const { userService, cartService } = require("../services");
-const { createUser } = userService;
+const { userService, cartService, authService } = require("../services");
+const { getHashedPass } = authService;
+const { createUser, fetchUserEmail } = userService;
 const { createCart } = cartService;
 
 
 
 const signupUser = async (req, res, next) => {
         const {email, username, password, address, city} = req.body
-
-        const userDb = await fetchUserPersonalData(email, username)
+        
+        const userDb = await fetchUserEmail(email, username)
         if (userDb) {
                 return res.send("Email or username already exists.")
         }
@@ -22,12 +22,12 @@ const signupUser = async (req, res, next) => {
                 address,
                 city,
                 user_role: "customer",
-                status: "active"
+                active: true
         }
         const newUser = await createUser(userdata) 
-        const newUserId = newUser.data.id
+        const newUserId = newUser.id
         const newCart = await createCart(newUserId)
-
+        
         res.json({
                 error: newUser.error,
                 user_id: newUserId,

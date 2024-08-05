@@ -4,7 +4,7 @@ CREATE TABLE userdata (
         password varchar not null,
         email varchar(30) not null,
         user_role varchar(10) not null,
-        status varchar(10) not null,
+        active bool not null,
         created_on timestamp not null default now()
         address varchar(25) not null,
         city varchar(15) not null,
