@@ -14,7 +14,7 @@ router
         .delete("/admin/advertisement/:id", admin.deleteAdminAd)
         // auth
         .post("/auth/register", validateNewUser, auth.signupUser)
-        .get("/auth/login", validateLogin)
+        .post("/auth/login", validateLogin, auth.loginUser)
         
 
 module.exports = router

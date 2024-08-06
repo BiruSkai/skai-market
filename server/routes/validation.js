@@ -8,7 +8,7 @@ const validateFormMainAdvertisement = [
         (req, res, next) => {
                 const errors = validationResult(req);
                 if (!errors.isEmpty()) {
-                        return res.json({errors:errors.array()})
+                        return res.status(422).json({errors:errors.array()})
                 }
                 next();
         }
@@ -24,7 +24,7 @@ const validateNewUser = [
         (req, res, next) => {
                 const errors = validationResult(req)
                 if (!errors.isEmpty()) {
-                        return res.json({errors: errors.array()})
+                        return res.status(422).json({errors: errors.array()})
                 }
                 else next();
         }
@@ -32,12 +32,12 @@ const validateNewUser = [
 
 const validateLogin = [
         check("email").not().isEmpty().isLength({max:35}),
-        check("password").not().isEmpty().isLength({max:12}),
+        check("password").not().isEmpty().isLength({min:5, max:12}),
         
         (req, res, next) => {
                 const errors = validationResult(req)
                 if (!errors.isEmpty) {
-                        return res.json({errors: errors.array()})
+                        return res.status(422).json({errors: errors.array()})
                 }
                 else next();
         }

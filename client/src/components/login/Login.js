@@ -1,21 +1,21 @@
 import { useForm } from "react-hook-form"
 import "../admin/admin.css"
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
 import apiAxios from "../../config/axiosConfig"
 
 
 
 const Login = () => {
-
+        const history = useHistory()
         const [msg, setMsg] = useState("")
-
         const {register, handleSubmit, formState} = useForm()
 
         const onLogin = async (data) => {
                 try {
                         console.log("a1: ", data)
                         const response = await apiAxios.post(
-                                "auth/login",
+                                "/auth/login",
                                 {
                                         email: data.email,
                                         password: data.password
@@ -23,6 +23,7 @@ const Login = () => {
                         )
                         if (response.status === 200) {
                                 console.log("login successful")
+                                return history.push("/")
                         }
                 }
                 catch (error) {
@@ -45,7 +46,7 @@ const Login = () => {
                                                                 maxLength:35
                                                         })} 
                                                 />
-                                                <label for="floatingInput">Email address</label>
+                                                <label for="floatingInput">Email address/Username</label>
                                                 {formState.errors.email?.type === "required" && <p className="note py-2">Email must be filled.</p>}
                                                 {formState.errors.email?.type === "maxLength" && <p className="note py-2">Max 35 characters.</p>}
                                                 {formState.errors.email?.type === "pattern" && <p className="note py-2">Invalid email address.</p>}
@@ -54,14 +55,12 @@ const Login = () => {
                                                 <input type="password" class="form-control" id="floatingPassword" {...register("password", {required:true, minLength:5, maxLength:12})} />
                                                 <label for="floatingPassword">Password</label>
                                                 {formState.errors.password?.type === "required" && <p className="note py-2">Password must be filled.</p>}
-                                                {formState.errors.password?.type === "minLength" && <p className="note py-2">Min five characters.</p>}
-                                                {formState.errors.password?.type === "maxLength" && <p className="note py-2">Max twelve characters.</p>}
                                         </div>
                                         <div class="my-3">
                                                 <button class="p-2 btn btn-primary col-12">Login</button>
                                         </div>
                                 </form>                
-                                { msg }
+                                <p className="note">{ msg }</p>
                                 </div>
                         </div>
                         
