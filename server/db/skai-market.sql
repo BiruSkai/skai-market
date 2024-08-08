@@ -60,6 +60,15 @@ CREATE TABLE main_advertisements (
         user_id varchar(3) not null
 );
 
+
+-- Modifying table
+alter table carts
+drop constraint carts_user_id_fkey,
+add constraint carts_user_id_fkey
+foreign key (user_id)
+references userdata(id)
+on delete cascade;
+
 -- Function, Trigger
 CREATE OR REPLACE FUNCTION update_modified_column()
 RETURNS TRIGGER AS $$

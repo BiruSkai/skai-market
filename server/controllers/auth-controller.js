@@ -12,10 +12,14 @@ const signupUser = async (req, res, next) => {
         const {email, username, password, address, city} = req.body
         
         const userDb = await fetchUserEmail(email, username)
+
         if (userDb?.active === true) {
+
                 return res.status(403).send("Email or username already exists.")
         }
+
         const hashedPass = await getHashedPass(password)
+
         const userdata = {
                 email,
                 username,
@@ -25,10 +29,12 @@ const signupUser = async (req, res, next) => {
                 user_role: "customer",
                 active: true
         }
+
         const newUser = await createUser(userdata) 
+
         const newUserId = newUser.id
         const newCart = await createCart(newUserId)
-        
+
         res.status(201).json({
                 error: newUser.error,
                 user_id: newUserId,
@@ -44,7 +50,7 @@ const loginUser = async (req, res, next) => {
                 return res.status(422).json({errors:errors.array()})
         }
         passport.authenticate(
-                "login",
+                "locale",
                 async (error, user, info) => {
                         if (error || !user) {
                                 const errMsg = new Error(info.message)

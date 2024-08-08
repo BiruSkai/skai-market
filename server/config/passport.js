@@ -6,7 +6,7 @@ const ExtractJWT = require("passport-jwt").ExtractJwt;
 const { userService } = require("../services")
 
 
-passport.use("login", 
+passport.use("locale", 
         new LocalStrategy({
                 usernameField: "email",
                 passwordField: "password", //by default passport set username and password as login field.

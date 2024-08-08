@@ -20,14 +20,14 @@ const Register = () => {
                                         city: data.city,
                                 }
                         )
-                        if (response.status === 200) {
-                                console.log("register successful")
+                        
+                        if (response.status === 201) {
+                                setMsg("")
                                 return history.push("/")
                         }
                 }
                 catch (error) {
-                        console.log("error Register: ", error.response.data.error.message)
-                        const errorMsg = error.response.data.error ? error.response.data.error.message : "Registration failed."
+                        const errorMsg = error.response.data ? error.response.data : "Registration failed."
                         setMsg(errorMsg)
                 }
         }

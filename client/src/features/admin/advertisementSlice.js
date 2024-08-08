@@ -10,7 +10,6 @@ export const fetchAllMainAdvertisement= createAsyncThunk("admin/fetchAllMainAdve
                 response.data.forEach(item => {
                         advertisement[item.id] = item
                 })
-                console.log("slice: ", advertisement)
                 return advertisement
         } catch (err) {
                 return err.message
