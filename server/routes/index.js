@@ -1,5 +1,6 @@
 const express = require("express");
 const Router = require("express-promise-router");
+const passport = require("passport");
 const { validateFormMainAdvertisement, validateNewUser, validateLogin } = require("./validation");
 const { auth, admin } = require("../controllers")
 
@@ -15,6 +16,12 @@ router
         // auth
         .post("/auth/register", validateNewUser, auth.signupUser)
         .post("/auth/login", validateLogin, auth.loginUser)
+        .post("/auth/logout", auth.logoutUser)
+
+        .get("/secured-route", passport.authenticate("jwt-customer",{session:false}), (req, res) => {
+                res
+                .status(200).send("<p>You're in secured route</p><a href='/auth/logout'>Logout</a>")
+        })
         
 
 module.exports = router

@@ -42,8 +42,8 @@ const MainAdvertisement = () => {
                                         imageAd: data.imageAd,
                                         title: data.title,
                                         description: data.description,
-                                }
-                                // {withCredentials: true}
+                                },
+                                {withCredentials: true}
                         )
 
                         if (response.status === 200) {

@@ -5,6 +5,7 @@ import MainAdvertisement from "./components/admin/MainAdvertisement";
 import AdminAdvertisementUpdate from "./components/admin/AdminAdvertisementUpdate";
 import Login from "./components/login/Login"
 import Register from "./components/login/Register";
+import Secret from "./components/Secret";
 
 
 
@@ -21,6 +22,7 @@ function App() {
             <Route exact path="/admin/advertisement/:id" component={AdminAdvertisementUpdate} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/secured-route" component={Secret} />
           </Switch>
         </div>
       </div>

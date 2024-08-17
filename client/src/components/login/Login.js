@@ -13,21 +13,24 @@ const Login = () => {
 
         const onLogin = async (data) => {
                 try {
-                        console.log("a1: ", data)
+                        console.log(data)
                         const response = await apiAxios.post(
                                 "/auth/login",
                                 {
                                         email: data.email,
                                         password: data.password
-                                }
+                                },
+                                {withCredentials:true}
+                             
                         )
                         if (response.status === 200) {
-                                console.log("login successful")
+                                setMsg("")
                                 return history.push("/")
                         }
                 }
                 catch (error) {
-                        const errorMsg = error.response.data.error ? error.response.data.errpr.message : "Email or password is incorrect."
+                        console.log("1.2 ", error)
+                        const errorMsg = error.response.data.error ? error.response.data.error.message : "Email or password is incorrect."
                         setMsg(errorMsg)
                 }
         }

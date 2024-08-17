@@ -11,7 +11,7 @@ const Home = () => {
         
         useEffect(() => {
                 dispatch(fetchAllMainAdvertisement())
-        }, [])
+        }, [dispatch])
         
         const adminAdvertisement = useSelector(selectAdminAllAdvertisement)
         const adminAdvertisementStatus = useSelector(selectFetchAdminAllAdvertisementStatus)
@@ -21,6 +21,7 @@ const Home = () => {
                 setIdArray(data)
                 setStatus(adminAdvertisementStatus)
         }, [adminAdvertisement, adminAdvertisementStatus])
+
 
         return ( 
                 <div className="container mt-4">

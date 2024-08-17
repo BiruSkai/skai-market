@@ -23,7 +23,6 @@ const validateNewUser = [
         
         (req, res, next) => {
                 const errors = validationResult(req)
-                console.log("3")
                 if (!errors.isEmpty()) {
                         return res.status(422).json({errors: errors.array()})
                 }
@@ -37,6 +36,7 @@ const validateLogin = [
         
         (req, res, next) => {
                 const errors = validationResult(req)
+                console.log("2")
                 if (!errors.isEmpty) {
                         return res.status(422).json({errors: errors.array()})
                 }
