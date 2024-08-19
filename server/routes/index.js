@@ -2,7 +2,7 @@ const express = require("express");
 const Router = require("express-promise-router");
 const passport = require("passport");
 const { validateFormMainAdvertisement, validateNewUser, validateLogin } = require("./validation");
-const { auth, admin } = require("../controllers")
+const { auth, admin, users } = require("../controllers")
 
 const router = new Router();
 
@@ -17,6 +17,8 @@ router
         .post("/auth/register", validateNewUser, auth.signupUser)
         .post("/auth/login", validateLogin, auth.loginUser)
         .post("/auth/logout", auth.logoutUser)
+        //users
+        .get("/users/self", passport.authenticate("jwt-customer", {session:false}), users.getUserSelf)
 
         .get("/secured-route", passport.authenticate("jwt-customer",{session:false}), (req, res) => {
                 res

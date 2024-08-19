@@ -1,9 +1,9 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { userService, cartService, authService } = require("../services");
+const { usersService, cartService, authService } = require("../services");
 const { validationResult } = require("express-validator");
 const { getHashedPass } = authService;
-const { createUser, fetchUserEmail } = userService;
+const { createUser, fetchUserEmail } = usersService;
 const { createCart } = cartService;
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -81,18 +81,16 @@ const loginUser = async (req, res, next) => {
                 }) (req, res, next)
 };
 
-const logoutUser = (res, req, next) => {
-        console.log(req-cookies)
-        res.clearCookie("JWT", {
-                maxAge: 1000 * 60 * 60,
-                httpOnly: true, 
-                sameSite: isProduction ? none : "lax",
-                secure: isProduction ? true : false
-                
-        })
-        res.status(200).send()
-
-     
+const logoutUser = (req, res, next) => {
+        
+        if (req.cookies["JWT"]) {
+                res.clearCookie("JWT", {
+                        httpOnly: true,
+                        sameSite: isProduction ? none : "lax",
+                        secure: isProduction ? true : false
+                })
+        }
+        return res.sendStatus(200)
 }
 
 

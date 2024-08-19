@@ -1,6 +1,5 @@
 import axios from "axios"
-// require("dotenv").config({path:.env})
-// console.log(process.env.EXPRESS_PORT)
+// console.log((process.env.REACT_APP_EXPRESS_PORT))
 
 
 const apiAxios = axios.create({
