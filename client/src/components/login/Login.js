@@ -1,13 +1,16 @@
 import { useForm } from "react-hook-form"
-import "../admin/admin.css"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux'
 import apiAxios from "../../config/axiosConfig"
+import { fetchCurrentUser } from "../../features/users/usersSlice"
+import "../admin/admin.css"
 
 
 
 const Login = () => {
         const history = useHistory()
+        const dispatch = useDispatch()
         const [msg, setMsg] = useState("")
         const {register, handleSubmit, formState} = useForm()
 
@@ -25,6 +28,7 @@ const Login = () => {
                         )
                         if (response.status === 200) {
                                 setMsg("")
+                                dispatch(fetchCurrentUser())
                                 return history.push("/")
                         }
                 }
