@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import apiAxios from "../../config/axiosConfig"
-import { fetchCurrentUser } from "../../features/users/usersSlice"
+import { fetchCurrentUser, isLoggedInUpdated, selectCurrentUser, selectCurrentUserStatus, selectIsLoggedIn } from "../../features/users/usersSlice"
 import "../admin/admin.css"
-
+import { needsCheckoutRedirectUpdated, selectCart, selectFetchCurrentCartStatus, selectNeedsCheckoutRedirect } from "../../features/cart/cartSlice"
+// ***Order not yet written
 
 
 const Login = () => {
@@ -13,6 +14,11 @@ const Login = () => {
         const dispatch = useDispatch()
         const [msg, setMsg] = useState("")
         const {register, handleSubmit, formState} = useForm()
+        const cartContents = useSelector(selectCart)
+        const needsCheckoutRedirect = useSelector(selectNeedsCheckoutRedirect)
+        const fetchCurrentCartStatus = useSelector(selectFetchCurrentCartStatus)
+        const userStatus = useSelector(selectCurrentUserStatus)
+        const isLoggedIn = useSelector(selectIsLoggedIn)
 
         const onLogin = async (data) => {
                 try {
@@ -29,6 +35,7 @@ const Login = () => {
                         if (response.status === 200) {
                                 setMsg("")
                                 dispatch(fetchCurrentUser())
+                                dispatch(fetchCurrentUser(cartContents))
                                 return history.push("/")
                         }
                 }
@@ -38,7 +45,37 @@ const Login = () => {
                         setMsg(errorMsg)
                 }
         }
+        
+        // When data/cart/order are fetched, update login status
+        useEffect(() => {
+                if (    userStatus === "succeeded" &&
+                        fetchCurrentCartStatus === "succeeded" 
+                ) {dispatch(isLoggedInUpdated(true))}
+        }, [userStatus, needsCheckoutRedirect, fetchCurrentCartStatus, dispatch])
 
+        // When login data is fetched, redirect to main site or checkout
+        useEffect(() => {
+                if (    userStatus === "succeeded" &&
+                        fetchCurrentCartStatus === "succeeded" &&
+                        isLoggedIn
+                ) {
+                        if (needsCheckoutRedirect) {
+                                dispatch(needsCheckoutRedirectUpdated(false)) 
+                                history.push("/checkout")
+                        } else {
+                                history.push("/")
+                        }
+                }
+        }, [userStatus, fetchCurrentCartStatus, isLoggedIn, needsCheckoutRedirect, history, dispatch])
+
+
+        useEffect(() => {
+                if (userStatus === "failed") {
+                        setMsg("An error occurred connecting to the server.")
+                }
+        }, [userStatus])
+
+        
         return ( 
                 <div className="container-md py-5 d-flex align-items-center justify-content-center justify-content-lg-end">
                         <div className="card col-md-6 cold-lg-4 shadow">

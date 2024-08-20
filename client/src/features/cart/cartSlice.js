@@ -17,7 +17,7 @@ export const fetchCurrentCart = createAsyncThunk("cart/fetchCurrentCart", async 
         return cart
 });
 
-export const currentCart = createSlice({
+export const cartSlice = createSlice({
         name:"cart",
         initialState: {
                 cartProducts: {},
@@ -44,7 +44,7 @@ export const currentCart = createSlice({
                         })
                         .addCase(fetchCurrentCart.fulfilled, (state, action) => {
                                 state.fetchCurrentCartStatus = "succeeded"
-                                state.fetchCurrentCartStatus = action.payload
+                                state.cartProducts = action.payload
                         })
                         .addCase(fetchCurrentCart.rejected, (state, action) => {
                                 state.fetchCurrentCartStatus = "failed"
@@ -53,14 +53,14 @@ export const currentCart = createSlice({
 });
 
 
-const {
-        needsCheckoutRedirect,
+export const {
+        needsCheckoutRedirectUpdated,
         productAddedMsgUpdated
 } = cartSlice.actions
 
 export const selectCart = state => state.cart.cartProducts
 export const selectFetchCurrentCartStatus = state => state.cart.fetchCurrentCartStatus
-export const selectCartNeedsCheckoutRedirect = state => state.cart.needsCheckoutRedirect
+export const selectNeedsCheckoutRedirect = state => state.cart.needsCheckoutRedirect
 export const selectProductAddedMsg = state => state.cart.productAddedMsg
 export const selectShowProductAddedMsg = state => state.cart.showProductAddedMsg
 
