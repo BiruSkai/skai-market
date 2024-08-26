@@ -1,6 +1,7 @@
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 const { userService } = require("../services");
@@ -33,6 +34,44 @@ passport.use(
                 return done(null, user, {message: "Log in successfully1111."})
         }
 ))
+
+passport.use(
+        "google",
+        new GoogleStrategy({
+                clientID: process.env.GOOGL_CLIENT_ID,
+                clientSecret: process.env.GOOGL_CLIENT_SECRET,
+                callbackURL: isProduction ? process.env.GOOGL_CALLBACK_URL : "http://localhost:3001/api/auth/google/redirect"
+        },
+        async (accessToken, refreshToken, profile, cb) {
+                const googleUser = await fetchUserByGoogleId(profile.id)
+                if (googleUser) {
+                        return cb(null, googleUser, {message: "user found."})
+                } else {
+                        // Check if user email and status active exist in db, then add google_id
+                        const userDb = await fetchUserByEmailDb(profile.emails[0].value)
+                        if (userDb?.active) {
+                                const googleUser = {
+                                        id: userDb.id,
+                                        google_id: profile.id
+                                }
+                                const newGoogleUser = await addGoogleIdUser(googleUser)
+                                return cb(null, newGoogleUser, {message: "Google login added to user."})
+                        }
+
+                        const user = {
+                                email: profile.email[0].value,
+                                google_id: profile.id,
+                                username: profile.name.givenName + "." + profile.name.familyName,
+                                user_role: "customer"
+                        }
+
+                        const newUser = await createUser(user)
+                        const newCart = await createCart(newUser.id)
+                        newUser.cart_id = newCart.id // Attach cart_id to newUser object sothat it can appear in JWT cookie on first login.
+                        return cb(null, newUser, {message: "New user created."})
+                }
+        })
+)
 
 // Check the JWT cookie
 passport.use(

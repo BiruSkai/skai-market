@@ -1,11 +1,11 @@
+import "../admin/admin.css"
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import apiAxios from "../../config/axiosConfig"
 import { fetchCurrentUser, isLoggedInUpdated, selectCurrentUser, selectCurrentUserStatus, selectIsLoggedIn } from "../../features/users/usersSlice"
-import "../admin/admin.css"
-import { needsCheckoutRedirectUpdated, selectCart, selectFetchCurrentCartStatus, selectNeedsCheckoutRedirect } from "../../features/cart/cartSlice"
+import { fetchCurrentCart, needsCheckoutRedirectUpdated, selectCart, selectFetchCurrentCartStatus, selectNeedsCheckoutRedirect } from "../../features/cart/cartSlice"
 // ***Order not yet written
 
 
@@ -22,7 +22,6 @@ const Login = () => {
 
         const onLogin = async (data) => {
                 try {
-                        console.log(data)
                         const response = await apiAxios.post(
                                 "/auth/login",
                                 {
@@ -35,12 +34,11 @@ const Login = () => {
                         if (response.status === 200) {
                                 setMsg("")
                                 dispatch(fetchCurrentUser())
-                                dispatch(fetchCurrentUser(cartContents))
+                                dispatch(fetchCurrentCart(cartContents))
                                 return history.push("/")
                         }
                 }
                 catch (error) {
-                        console.log("1.2 ", error)
                         const errorMsg = error.response.data.error ? error.response.data.error.message : "Email or password is incorrect."
                         setMsg(errorMsg)
                 }

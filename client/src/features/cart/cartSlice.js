@@ -3,7 +3,7 @@ import apiAxios from "../../config/axiosConfig";
 
 
 export const fetchCurrentCart = createAsyncThunk("cart/fetchCurrentCart", async (loggedOutCart) => {
-        const response = await apiAxios("/carts/self", 
+        const response = await apiAxios.post("/carts/self", 
                 {
                         cart: loggedOutCart
                 }
