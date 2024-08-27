@@ -74,12 +74,30 @@ const loginUser = async (req, res, next) => {
                                                 secure: isProduction ? true : false, // cookie sent only in https if true (adding security)
                                                 
                                         })
-                                        console.log("6", req.cookies["JWT"])
+
                                         return res.status(200).send("Login successful.");
                                 }
                         );
                 }) (req, res, next)
 };
+
+const loginGoogle = async (req, res, next) => {
+        const user = req.user
+        const body = {id: user.id, cart_id: user.cart_id, email: user.email, role: user.user_role}
+        const token = jwt.sign({ user: body }, process.env.JWT_KEY)
+
+        res.cookie("JWT", token, {
+                maxAge: 1000 * 60 * 60,
+                httpyOnly: true,
+                sameSite: isProduction ? null : "lax",
+                secure: isProduction ? true : false
+        })
+
+        return res      .status(200)
+                        .redirect(isProduction ? 
+                                process.env.GOOGL_FRONT_END_REDIRECT_URL :
+                                "http://localhost:3000/google-login")
+}
 
 const logoutUser = (req, res, next) => {
         
@@ -97,5 +115,6 @@ const logoutUser = (req, res, next) => {
 module.exports = {
         signupUser,
         loginUser,
-        logoutUser
+        logoutUser, 
+        loginGoogle
 }
