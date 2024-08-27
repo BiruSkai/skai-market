@@ -97,3 +97,31 @@ passport.use(
                 }
         )
 );
+
+passport.use(
+        "jwt-admin",
+        new JWTStrategy(
+                {
+                        secretOrKey: process.env.JWT_KEY,
+                        fromExtractors: ExtractJWT.fromExtractors([
+                                (req) => {
+                                        let token= null
+                                        if (req && req.cookies) {
+                                                token= req.cookies["JWT"]
+                                        } 
+                                        return token
+                                }
+                        ])
+                },
+                async (jwtPayload, done) => {
+                        if (token.user_role !== "admin") { // Reject if not admin
+                                return done(null, false) 
+                        } 
+                        try {
+                                return done(null, jwtPayload.user)
+                        } catch (error) {
+                                done(error)
+                        }
+                }
+        )
+);

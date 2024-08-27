@@ -101,6 +101,10 @@ const Login = () => {
                                         <div class="my-3">
                                                 <button class="p-2 btn btn-primary col-12">Login</button>
                                         </div>
+                                        <div>OR</div>
+                                        <div>
+                                                <button class="p-2 btn btn-primary col-12">Login with Google</button>
+                                        </div>
                                 </form>                
                                 <p className="note">{ msg }</p>
                                 </div>

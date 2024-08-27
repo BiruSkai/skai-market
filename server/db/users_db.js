@@ -25,6 +25,7 @@ const fetchUserByEmailDb = async (email, username) => {
 const fetchUsersDb = async () => {
         const data = await pool.query(`SELECT userdata.id, username, email, user_role, active, created_on, address, city,
                 carts.id FROM users INNER JOIN carts ON users.id = carts.user_id`)
+        console.log("user_db_fetchUserDb: ", data.rows )
         return data.rows
 }
 

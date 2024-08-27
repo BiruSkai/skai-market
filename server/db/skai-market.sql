@@ -8,7 +8,8 @@ CREATE TABLE userdata (
         created_on timestamp not null default now()
         address varchar(25) not null,
         city varchar(15) not null,
-        updated_on timestamp
+        updated_on timestamp,
+        google_id varchar(100)
 );
 
 CREATE TABLE products (
