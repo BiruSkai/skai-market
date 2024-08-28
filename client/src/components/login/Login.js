@@ -1,4 +1,5 @@
 import "../admin/admin.css"
+import "./login.css";
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
@@ -75,38 +76,40 @@ const Login = () => {
 
         
         return ( 
-                <div className="container-md py-5 d-flex align-items-center justify-content-center justify-content-lg-end">
+                <div className="container-md py-5 py-md-4 col-lg-10 d-flex align-items-center justify-content-center">
                         <div className="card col-md-6 cold-lg-4 shadow">
                                 <div className="card-body">
-                                <h3>User Login</h3>
-                                <form onSubmit={handleSubmit(onLogin)}>
-                                        <div class="form-floating my-3">
-                                                <input type="email" class="form-control" id="floatingInput" {
-                                                        ...register("email", {
-                                                                required:true,
-                                                                pattern:{value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i},
-                                                                maxLength:35
-                                                        })} 
-                                                />
-                                                <label for="floatingInput">Email address/Username</label>
-                                                {formState.errors.email?.type === "required" && <p className="note py-2">Email must be filled.</p>}
-                                                {formState.errors.email?.type === "maxLength" && <p className="note py-2">Max 35 characters.</p>}
-                                                {formState.errors.email?.type === "pattern" && <p className="note py-2">Invalid email address.</p>}
-                                        </div>
-                                        <div class="form-floating">
-                                                <input type="password" class="form-control" id="floatingPassword" {...register("password", {required:true, minLength:5, maxLength:12})} />
-                                                <label for="floatingPassword">Password</label>
-                                                {formState.errors.password?.type === "required" && <p className="note py-2">Password must be filled.</p>}
-                                        </div>
-                                        <div class="my-3">
-                                                <button class="p-2 btn btn-primary col-12">Login</button>
-                                        </div>
-                                        <div>OR</div>
-                                        <div>
-                                                <button class="p-2 btn btn-primary col-12">Login with Google</button>
-                                        </div>
-                                </form>                
-                                <p className="note">{ msg }</p>
+                                        <div className="h3 loginTitle">Login</div>
+                                        <form onSubmit={handleSubmit(onLogin)}>
+                                                <div class="form-floating my-3 loginText">
+                                                        <input type="email" class="form-control" id="floatingInput" {
+                                                                ...register("email", {
+                                                                        required:true,
+                                                                        pattern:{value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i},
+                                                                        maxLength:35
+                                                                })} 
+                                                        />
+                                                        <label for="floatingInput">Email/ Username</label>
+                                                        {formState.errors.email?.type === "required" && <p className="note py-2">Email must be filled.</p>}
+                                                        {formState.errors.email?.type === "maxLength" && <p className="note py-2">Max 35 characters.</p>}
+                                                        {formState.errors.email?.type === "pattern" && <p className="note py-2">Invalid email address.</p>}
+                                                </div>
+                                                <div class="form-floating loginText">
+                                                        <input type="password" class="form-control" id="floatingPassword" {...register("password", {required:true, minLength:5, maxLength:12})} />
+                                                        <label for="floatingPassword">Password</label>
+                                                        {formState.errors.password?.type === "required" && <p className="note py-2">Password must be filled.</p>}
+                                                </div>
+                                                <div class="my-2">
+                                                        <button class="p-2 btn btn-primary col-12 loginText">Login</button>
+                                                </div>
+                                                <div class="p-2 d-flex justify-content-center pt-3 loginText">
+                                                        <p className="or loginText"><span>OR</span></p>
+                                                </div>
+                                                <div class="my-2">
+                                                        <button class="p-2 btn btn-primary col-12 loginText"><i class="bi bi-google"></i>oogle login</button>
+                                                </div>
+                                        </form>                
+                                        <p className="note loginText">{ msg }</p>
                                 </div>
                         </div>
                         

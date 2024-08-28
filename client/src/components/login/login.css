@@ -1,0 +1,27 @@
+.or {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #000;
+        line-height: 0.1em;
+}
+
+.or span {
+        background:#fff; 
+        padding:0 10px; 
+}
+
+@media only screen and (min-width: 768px) {
+        .loginTitle {
+                font-size: 1em;
+                
+        }
+        
+        .loginText {
+          font-size: 0.8em;
+        }
+
+        #floatingInput, #floatingPassword {
+                font-size: 1em;
+                height: 4em
+        }
+}

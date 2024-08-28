@@ -28,9 +28,10 @@ export const store = configureStore({
                 adminMainAdvertisement: adminAdvertisementReducer,
                 users: usersReducer,
         },
-        middleware: getDefaultMiddleware({
-                serializableCheck: {
-                  ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-                },
+        middleware:  (getDefaultMiddleware) =>
+                getDefaultMiddleware({
+                        serializableCheck: {
+                        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+                        },
         }),
 })

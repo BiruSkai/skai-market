@@ -1,5 +1,5 @@
 import apiAxios from "../../config/axiosConfig";
-const { createAsyncThunk, createSlice } = require("@reduxjs/toolkit");
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
 export const fetchCurrentUser = createAsyncThunk("users/fetchCurrentUser", async() => {
