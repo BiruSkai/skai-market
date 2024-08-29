@@ -1,25 +1,25 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { usersService, cartService, authService } = require("../services");
+const { usersService, cartsService, authService } = require("../services");
 const { validationResult } = require("express-validator");
 const { getHashedPass } = authService;
 const { createUser, fetchUserEmail } = usersService;
-const { createCart } = cartService;
+const { createCart } = cartsService;
 const isProduction = process.env.NODE_ENV === "production";
 
 
 const signupUser = async (req, res, next) => {
         const {email, username, password, address, city} = req.body
-        
+        console.log("contr1: ", email)
         const userDb = await fetchUserEmail(email, username)
 
         if (userDb?.active === true) {
 
                 return res.status(403).send("Email or username already exists.")
         }
-
+        
         const hashedPass = await getHashedPass(password)
-
+        
         const userdata = {
                 email,
                 username,
@@ -27,14 +27,15 @@ const signupUser = async (req, res, next) => {
                 address,
                 city,
                 user_role: "customer",
-                active: true
+                active: true,
+                google_id:null
         }
 
         const newUser = await createUser(userdata) 
-
+        
         const newUserId = newUser.id
         const newCart = await createCart(newUserId)
-
+        
         res.status(201).json({
                 error: newUser.error,
                 user_id: newUserId,

@@ -4,8 +4,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const JWTStrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
-const { userService } = require("../services");
-const { addGoogleIdUser } = userService;
+const { usersService } = require("../services");
+const { addGoogleIdUser } = usersService;
 const isProduction = process.env.NODE_ENV === "production";
 
 
@@ -16,7 +16,7 @@ passport.use(
                 passwordField: "password", //by default passport set username and password as login field.
         },
         async (username, password, done) => {
-                const user = await userService.fetchUserEmail(username);
+                const user = await usersService.fetchUserEmail(username);
                 
                 if (!user) {
                         return done(null, false, {message: "Incorrect email or password."})
@@ -39,7 +39,7 @@ passport.use(
                 clientSecret: process.env.GOOGL_CLIENT_SECRET,
                 callbackURL: isProduction ? process.env.GOOGL_CALLBACK_URL : "http://localhost:3001/api/auth/google/redirect"
         },
-        async (accessToken, refreshToken, profile, cb) {
+        async (accessToken, refreshToken, profile, cb) => {
                 const googleUser = await fetchUserByGoogleId(profile.id)
                 if (googleUser) {
                         return cb(null, googleUser, {message: "user found."})
@@ -103,7 +103,7 @@ passport.use(
         new JWTStrategy(
                 {
                         secretOrKey: process.env.JWT_KEY,
-                        fromExtractors: ExtractJWT.fromExtractors([
+                        jwtFromRequest: ExtractJWT.fromExtractors([
                                 (req) => {
                                         let token= null
                                         if (req && req.cookies) {

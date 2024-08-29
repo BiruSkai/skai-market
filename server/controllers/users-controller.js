@@ -1,4 +1,4 @@
-import { usersService, cartsService } from "../services"
+const { usersService, cartsService } = require("../services")
 const { fetchUserById } = usersService
 
 

@@ -76,10 +76,10 @@ const Login = () => {
 
         
         return ( 
-                <div className="container-md py-5 py-md-4 col-lg-10 d-flex align-items-center justify-content-center">
-                        <div className="card col-md-6 cold-lg-4 shadow">
+                <div className="container-md py-5 py-md-4 col-lg-7 d-flex align-items-center justify-content-center">
+                        <div className="card col-md-6 shadow">
                                 <div className="card-body">
-                                        <div className="h3 loginTitle">Login</div>
+                                        <div className="h3 loginTitle">Login to Skai-market</div>
                                         <form onSubmit={handleSubmit(onLogin)}>
                                                 <div class="form-floating my-3 loginText">
                                                         <input type="email" class="form-control" id="floatingInput" {
@@ -105,7 +105,7 @@ const Login = () => {
                                                 <div class="p-2 d-flex justify-content-center pt-3 loginText">
                                                         <p className="or loginText"><span>OR</span></p>
                                                 </div>
-                                                <div class="my-2">
+                                                <div class="my-1">
                                                         <button class="p-2 btn btn-primary col-12 loginText"><i class="bi bi-google"></i>oogle login</button>
                                                 </div>
                                         </form>                

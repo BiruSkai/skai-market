@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Nav = () => {
         return ( 
-                <div className="list-unstyled d-flex justify-content-between bg-light">
+                <div className="list-unstyled d-flex justify-content-between">
                 {/* Sm size */}
                         <div class="dropdown d-md-none">
                                 <button class="p-2 border-0 dropdown-toggle bg-light text-primary fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -31,7 +31,7 @@ const Nav = () => {
                 {/* Md size */} 
                         <div class=" navMd p-2 d-none d-md-flex justify-content-between ">
                                 <div class="d-flex align-items-center">
-                                        <div class="text-success fw-bolder border-end border-3 border-success px-2 bg-warning">Skai Market</div>
+                                        <div class="fw-bolder border-end border-3 border-dark px-2">Skai Market</div>
                                         <Link to="#" className="navItemMd">About</Link>
                                         <Link to="#" className="navItemMd">Address</Link>
                                         <Link to="#" className="navItemMd">News</Link>

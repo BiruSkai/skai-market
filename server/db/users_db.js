@@ -2,8 +2,8 @@ const {pool} = require("../config/index")
 
 
 const createUserDb = async (userdata) => {
-
-        const {email, username, hashedPass, address, city, user_role, active} = userdata;
+        
+        const {email, username, hashedPass, address, city, user_role, active, google_id} = userdata;
         
         const personalDataFormula = `INSERT INTO userdata(username, password, email, user_role, active, address, city, google_id)
                                 VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`
