@@ -16,3 +16,12 @@
 .shopping:hover {
         color: green;
 }
+
+@media only screen and (min-width: 768px) {
+
+        h5 { font-size: 1.1em; }
+
+       .mdText {
+                font-size: 0.8em;
+       }
+}

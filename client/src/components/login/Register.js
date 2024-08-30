@@ -26,7 +26,7 @@ const Register = () => {
                         
                         if (response.status === 201) {
                                 setMsg("")
-                                return history.push("/")
+                                return history.push("/login")
                         }
                 }
                 catch (error) {

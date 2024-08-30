@@ -1,3 +1,4 @@
+import "./home.css";
 import { useEffect, useState } from "react";
 import Carousel from "./Carousel";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +25,7 @@ const Home = () => {
 
 
         return ( 
-                <div className="container mt-4">
+                <div className="container mt-4 mdText">
                         <Carousel items={adminAdvertisement} idArray={idArray} status={status} />
                         <div class="m-3 d-flex flex-column flex-md-row justify-content-center">
                                 <button className="shopping"><i class="bi bi-shop me-2"></i>Click here for online shopping</button> 

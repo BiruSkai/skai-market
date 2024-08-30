@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import apiAxios from "../../config/axiosConfig"
 import { fetchCurrentUser, isLoggedInUpdated, selectCurrentUser, selectCurrentUserStatus, selectIsLoggedIn } from "../../features/users/usersSlice"
 import { fetchCurrentCart, needsCheckoutRedirectUpdated, selectCart, selectFetchCurrentCartStatus, selectNeedsCheckoutRedirect } from "../../features/cart/cartSlice"
-// ***Order not yet written
+import { fetchCustomerOrders, selectFetchCustomerOrderStatus } from "../../features/orders/ordersSlice"
 
 
 const Login = () => {
@@ -18,6 +18,7 @@ const Login = () => {
         const cartContents = useSelector(selectCart)
         const needsCheckoutRedirect = useSelector(selectNeedsCheckoutRedirect)
         const fetchCurrentCartStatus = useSelector(selectFetchCurrentCartStatus)
+        const fetchCustomerOrderStatus = useSelector(selectFetchCustomerOrderStatus)
         const userStatus = useSelector(selectCurrentUserStatus)
         const isLoggedIn = useSelector(selectIsLoggedIn)
 
@@ -48,7 +49,8 @@ const Login = () => {
         // When data/cart/order are fetched, update login status
         useEffect(() => {
                 if (    userStatus === "succeeded" &&
-                        fetchCurrentCartStatus === "succeeded" 
+                        fetchCurrentCartStatus === "succeeded" &&
+                        fetchCustomerOrderStatus === "succeeded"
                 ) {dispatch(isLoggedInUpdated(true))}
         }, [userStatus, needsCheckoutRedirect, fetchCurrentCartStatus, dispatch])
 
@@ -105,10 +107,10 @@ const Login = () => {
                                                 <div class="p-2 d-flex justify-content-center pt-3 loginText">
                                                         <p className="or loginText"><span>OR</span></p>
                                                 </div>
-                                                <div class="my-1">
-                                                        <button class="p-2 btn btn-primary col-12 loginText"><i class="bi bi-google"></i>oogle login</button>
-                                                </div>
-                                        </form>                
+                                        </form>       
+                                        <div class="my-1">
+                                                <button class="p-2 btn btn-primary col-12 loginText"><i class="bi bi-google"></i>oogle login</button>
+                                        </div>         
                                         <p className="note loginText">{ msg }</p>
                                 </div>
                         </div>
