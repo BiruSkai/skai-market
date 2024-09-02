@@ -13,6 +13,8 @@ import storage from 'redux-persist/lib/storage'
 import adminAdvertisementReducer from "./features/admin/advertisementSlice"
 import usersReducer from "./features/users/usersSlice"
 import cartReducer from "./features/cart/cartSlice"
+import ordersReducer from "./features/orders/ordersSlice"
+import productsReducer from "./features/products/productsSlice"
  
 
 const persistConfig = {
@@ -27,6 +29,8 @@ export const store = configureStore({
                 cart: persistedCartReducer,
                 adminMainAdvertisement: adminAdvertisementReducer,
                 users: usersReducer,
+                orders: ordersReducer,
+                products: productsReducer
         },
         middleware:  (getDefaultMiddleware) =>
                 getDefaultMiddleware({

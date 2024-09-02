@@ -3,7 +3,7 @@ import apiAxios from "../../config/axiosConfig";
 
 
 export const fetchCustomerOrders = createAsyncThunk("orders/fetchCustomerOrders", async () => {
-        const response = await apiAxios("/orders/self")
+        const response = await apiAxios.get("/orders/self")
         const orders = {}
 
         response.data.forEach(orderProduct => {
