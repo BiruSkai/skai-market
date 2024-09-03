@@ -62,7 +62,7 @@ const validatePostProduct = [
         check("category").not().isEmpty().isLength({max:15}),
         check("description").not().isEmpty().isLength({max:50}),
         check("img_url").not().isEmpty(),
-        check("status").not().isEmpty().isLength({max:50}),
+        check("status").not().isEmpty().isLength({max:15}),
         
         (req, res, next) => {
                 const errors = validationResult(req)

@@ -33,7 +33,7 @@ router
         .get("/products", products.getAllProducts)
         .get("/products/:id", validateGetProducts, products.getProductById)
         .post("/products", validatePostProduct, passport.authenticate("jwt-admin", {session: false}), products.postProduct)
-        .put("/products", validatePutProduct, passport.authenticate("jwt-admin", {session: false}), products.putProduct)
+        .put("/products/:id", validatePutProduct, passport.authenticate("jwt-admin", {session: false}), products.putProduct)
         .delete("/products/:id", validateDeleteProduct, passport.authenticate("jwt-admin", {session: false}), products.deleteProduct)
         
         //users

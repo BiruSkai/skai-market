@@ -67,7 +67,7 @@ const loginUser = async (req, res, next) => {
                                         console.log("auth-contr: ", user)
                                         const body = {id:user.id, cart_id:user.cart_id, email:user.email, role:user.user_role};
                                         const token = jwt.sign({user:body}, process.env.JWT_KEY);
-                                        console.log("5 ", token)
+                                        
                                         res.cookie("JWT", token, {
                                                 maxAge: 1000 * 60 * 60,
                                                 httpOnly: true, // A cookie with the HttpOnly attribute is blocked from JavaScript and only is included in requests to the domain.
