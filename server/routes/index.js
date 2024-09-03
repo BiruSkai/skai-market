@@ -1,7 +1,12 @@
 const express = require("express");
 const Router = require("express-promise-router");
 const passport = require("passport");
-const { validateFormMainAdvertisement, validateNewUser, validateLogin } = require("./validation");
+const { 
+        validateFormMainAdvertisement, validateNewUser, validateLogin, validatePutUser, validateDeleteUser,
+        validateGetProducts, validatePostProduct, validatePutProduct, validateDeleteProduct,
+        validateCart, validateDeleteCartProduct, validateOrder
+
+} = require("./validation");
 const { auth, products, admin, users, carts } = require("../controllers")
 
 const router = new Router();
@@ -42,7 +47,7 @@ router
         .post("/carts/self", passport.authenticate("jwt-customer", {session:false}), carts.syncCartSelf) // Get products in user's cart and syncs with logged out cart
         .post("/carts/self/product", validateCart, passport.authenticate("jwt-customer", {session: false}), carts.postProductInCartSelf) // Adds a new product to user's cart
         .put("/carts/self/product", validateCart, passport.authenticate("jwt-customer", {session: false}), carts.putCartSelf) // Changes quantity of a product in user's cart
-        .delete("/carts/self/product", validateCart, passport.authenticate("jwt-customer", {session: false}), carts.deleteCartProductSelf) // Delete a product from user's cart
+        .delete("/carts/self/product", validateDeleteCartProduct, passport.authenticate("jwt-customer", {session: false}), carts.deleteCartProductSelf) // Delete a product from a user's cart
         .post("/carts/self/checkout", passport.authenticate("jwt-customer", {session: false}), carts.checkoutCart) // Check out a user's cart and places an order
         
         .get("/orders", passport.authenticate("jwt-admin", {session: false}), orders.getAllOrders) // Get all orders for all users
