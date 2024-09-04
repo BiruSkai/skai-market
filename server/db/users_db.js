@@ -25,7 +25,7 @@ const fetchUserByEmailDb = async (email, username) => {
 const fetchUsersDb = async () => {
         const data = await pool.query(`SELECT userdata.id, username, email, user_role, active, created_on, address, city,
                 carts.id FROM users INNER JOIN carts ON users.id = carts.user_id`)
-        console.log("user_db_fetchUserDb: ", data.rows )
+        
         return data.rows
 }
 
@@ -35,10 +35,23 @@ const addGoogleIdUserDb = async ({id, google_id}) => {
         return data.rows
 }
 
+const modifyUserSelfDb = async ({id, username, hashedPass, email, address, city}) => {
+        const formula = `UDPATE userdata SET username=$2, password=$3, email=$4, address=$5, city=$6 WHERE id=$1`
+        const input = [id, username, hashedPass, email, address, city]
+        const data = await pool.query(formula, input)
+        return data.rows
+}
+
+const removeUserDb = async (id) => {
+        const data = await pool.query(`UPDATE userdata SET active = false WHERE id=$1`, [id])
+        return data.rows
+}
 
 module.exports = {
         createUserDb,
         fetchUserByEmailDb,
         fetchUsersDb,
-        addGoogleIdUserDb
+        addGoogleIdUserDb,
+        modifyUserSelfDb,
+        removeUserDb
 }

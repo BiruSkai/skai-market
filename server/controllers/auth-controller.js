@@ -10,7 +10,6 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const signupUser = async (req, res, next) => {
         const {email, username, password, address, city} = req.body
-        console.log("contr1: ", email)
         const userDb = await fetchUserEmail(email, username)
 
         if (userDb?.active === true) {
