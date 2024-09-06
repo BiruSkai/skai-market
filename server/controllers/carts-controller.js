@@ -25,7 +25,63 @@ const syncCartSelf = async (req, res, next) => {
         next()
 }
 
+const getAllCarts = async (req, res, next) => {
+        const data = await fetchAllCarts()
+        res.status(200).json(data)
+        next()
+}
+
+const postProductInCartSelf = async (req, res, next) => {
+        const { product_id, quantity } = req.body
+        const cartId = req.user.cart_id 
+
+        const cartProduct = { 
+                product_id, 
+                cart_id: cartId, 
+                quantity 
+        }
+
+        await createProductInCart(cartProduct)
+        res.sendStatus(201)
+        next() 
+}
+
+const putCartSelf = async (req, res, next) => {
+        const { product_id, quantity } = req.body 
+        const cartId = req.user.cart_id 
+
+        const updateCartProduct = {
+                product_id,
+                quantity,
+                cart_id: cartId
+        }
+
+        const newCart = await modifyCart(updateCartProduct)
+        res.status(200).json(newCart)
+        next()
+
+}
+
+const deleteCartProductSelf = async (req, res, next) => {
+        const cartId = req.user.cart_id 
+        const { product_id } = req.body 
+
+        const cartProduct = { 
+                cart_id: cartId, 
+                product_id
+        }
+
+        const deleted = await removeCartProduct(cartProduct)
+        res.status(200).json(deleted)
+        next()
+}
+
 
 module.exports = {
         syncCartSelf,
+        getAllCarts,
+        postProductInCartSelf,
+        putCartSelf,
+        deleteCartProductSelf,
+
 }

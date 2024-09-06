@@ -21,6 +21,11 @@ const fetchUserByEmailDb = async (email, username) => {
         return data.rows[0]
 }
 
+const fetchUserByIdDb = async (id) => {
+        const data = await pool.query(`SELECT * FROM userdata WHERE id=$1`, [id])
+        return data.rows 
+}
+
 
 const fetchUsersDb = async () => {
         const data = await pool.query(`SELECT userdata.id, username, email, user_role, active, created_on, address, city,
@@ -51,6 +56,7 @@ module.exports = {
         createUserDb,
         fetchUserByEmailDb,
         fetchUsersDb,
+        fetchUserByIdDb,
         addGoogleIdUserDb,
         modifyUserSelfDb,
         removeUserDb

@@ -15,11 +15,11 @@ const fetchProductByIdDb = async (productId) => {
 }
 
 const createProductDb = async (product) => {
-        const { title, price, quantity, category, description, img_url, status } = product
+        const { title, price, category, description, img_url, status } = product
         
-        const formula = `INSERT INTO products(title, price, quantity, category, description, img_url, status) 
-                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`
-        const input = [title, price, quantity, category, description, img_url, status]
+        const formula = `INSERT INTO products(title, price, category, description, img_url, status) 
+                VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`
+        const input = [title, price, category, description, img_url, status]
         const data = await pool.query(formula, input)
         
         return data.rows[0]
