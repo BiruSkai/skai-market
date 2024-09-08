@@ -3,6 +3,7 @@ const cartsService = require("./carts_service")
 const adminService = require("./admin_service")
 const authService = require("./auth_service")
 const productService = require("./product_service")
+const ordersService = require("-/orders_service")
 
  
 module.exports = {
@@ -10,5 +11,6 @@ module.exports = {
         cartsService,
         adminService,
         authService,
-        productService
+        productService,
+        ordersService 
 }

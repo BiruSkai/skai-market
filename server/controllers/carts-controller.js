@@ -1,5 +1,6 @@
-const { cartsService } = require("../services");
-const { fetchCartById } = cartsService;
+const { cartsService, ordersService } = require("../services");
+const { fetchCartById, createProductInCart, fetchCarts, modifyCart, removeCartProduct } = cartsService;
+const { createOrder, createProductInOrder } = ordersService;
 
 
 // get cartDbById, if new productId not there, add them to the cart
@@ -26,7 +27,7 @@ const syncCartSelf = async (req, res, next) => {
 }
 
 const getAllCarts = async (req, res, next) => {
-        const data = await fetchAllCarts()
+        const data = await fetchCarts()
         res.status(200).json(data)
         next()
 }
@@ -76,6 +77,33 @@ const deleteCartProductSelf = async (req, res, next) => {
         next()
 }
 
+const checkoutCart = async (req, res, next) => {
+        const cartId = req.user.cart_id 
+        const userId = req.user.id 
+
+        const cart = await fetchCartById(userId)
+        if (!cart.length === 0) {
+                res.status(500).send("Cart is empty.")
+                next()
+        }
+        const orderId = await createOrder(userId)
+
+        await Promise.all(cart.map(async (item) => {
+                await createProductInOrder({
+                        order_id : orderId,
+                        product_id : item.product_id,
+                        quantity : item.quantity,
+                        price : item.price 
+                })
+                await removeCartProduct({
+                        cart_id: cartId,
+                        product_id: item.product_id 
+                })
+        }))
+        res.status(201).json(order_id: orderId)
+        next()
+}
+
 
 module.exports = {
         syncCartSelf,
@@ -83,5 +111,5 @@ module.exports = {
         postProductInCartSelf,
         putCartSelf,
         deleteCartProductSelf,
-
+        checkoutCart
 }
