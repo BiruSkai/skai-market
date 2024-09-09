@@ -7,7 +7,7 @@ const {
         validateCart, validateDeleteCartProduct, validateOrder
 
 } = require("./validation");
-const { auth, products, admin, users, carts } = require("../controllers")
+const { auth, products, admin, users, carts, orders, payment } = require("../controllers")
 
 const router = new Router();
 

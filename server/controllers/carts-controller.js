@@ -100,7 +100,7 @@ const checkoutCart = async (req, res, next) => {
                         product_id: item.product_id 
                 })
         }))
-        res.status(201).json(order_id: orderId)
+        res.status(201).json({order_id: orderId})
         next()
 }
 
