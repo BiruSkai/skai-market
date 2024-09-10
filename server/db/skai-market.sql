@@ -39,7 +39,7 @@ CREATE TABLE orders (
         id serial primary key,
         user_id int references userdata(id),
         status varchar(15) not null,
-        total_cost decimal(10,2) not null,
+        order_price decimal(10,2),
         created_on timestamp default now()
 );
 

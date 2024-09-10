@@ -12,7 +12,6 @@ const { auth, products, admin, users, carts, orders, payment } = require("../con
 const router = new Router();
 
 
-// router.post("/auth/user_register", validateNewUser, auth.signupUser)
 router
         .get("/admin/advertisement", admin.getAllMainAdvertisement)
         .post("/admin/advertisement", validateFormMainAdvertisement, admin.newMainAdvertisement)

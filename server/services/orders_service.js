@@ -1,4 +1,5 @@
 import { fetchOrdersDb, fetchOrderByIdDb, createOrderDb, fetchOrdersByUserDb, createProductInOrderDb } from "../db";
+import { fetchCartById } from "./carts_service";
 
 
 const fetchOrders = async () => {
@@ -25,6 +26,16 @@ const createProductInOrder = async (orderProduct) => {
         return await createProductInOrderDb(orderProduct)
 }
 
+const calculateOrderAmount = async (userId) => {
+        const cart = await fetchCartById(userId)
+
+        const totalPrice = cart.reduce((acc, item) => {
+                acc + parseFloat(item.product.price) * parseInt(item.product.quantity, 10)
+        }, 0)
+
+        return totalPrice * 100 // Return price in cents
+}
+
 
 module.exports = {
         fetchOrders, 
@@ -32,4 +43,5 @@ module.exports = {
         createOrder, 
         fetchOrdersByUser,
         createProductInOrder,
+        calculateOrderAmount
 }
