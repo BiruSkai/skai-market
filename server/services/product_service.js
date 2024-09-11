@@ -1,4 +1,4 @@
-import { fetchProductsDb, fetchProductByIdDb, createProductDb, modifyProductDb, removeProductDb } from "../db/products_db"
+const { fetchProductsDb, fetchProductByIdDb, createProductDb, modifyProductDb, removeProductDb } = require("../db") 
 
 
 const fetchProducts = async () => {

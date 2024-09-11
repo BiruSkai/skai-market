@@ -3,7 +3,8 @@ const { pool } = require("../config/index")
 
 const fetchProductsDb = async () => {
         const data = await pool.query(`SELECT * FROM products`)
-        return data.rows[0]
+        
+        return data.rows
 }
 
 const fetchProductByIdDb = async (productId) => {

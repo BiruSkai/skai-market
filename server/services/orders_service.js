@@ -1,5 +1,5 @@
-import { fetchOrdersDb, fetchOrderByIdDb, createOrderDb, fetchOrdersByUserDb, createProductInOrderDb } from "../db";
-import { fetchCartById } from "./carts_service";
+const { fetchOrdersDb, fetchOrderByIdDb, createOrderDb, fetchOrdersByUserDb, createProductInOrderDb } = require("../db");
+const { fetchCartById } = require("./carts_service");
 
 
 const fetchOrders = async () => {
