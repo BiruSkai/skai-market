@@ -29,8 +29,8 @@ const fetchUserByIdDb = async (id) => {
 
 const fetchUsersDb = async () => {
         const data = await pool.query(`SELECT userdata.id, username, email, user_role, active, created_on, address, city,
-                carts.id FROM users INNER JOIN carts ON users.id = carts.user_id`)
-        
+                carts.id FROM userdata INNER JOIN carts ON userdata.id = carts.user_id`)
+        console.log("1 ", data.rows)
         return data.rows
 }
 
@@ -41,9 +41,11 @@ const addGoogleIdUserDb = async ({id, google_id}) => {
 }
 
 const modifyUserSelfDb = async ({id, username, hashedPass, email, address, city}) => {
-        const formula = `UDPATE userdata SET username=$2, password=$3, email=$4, address=$5, city=$6 WHERE id=$1`
+        
+        const formula = `UPDATE userdata SET username=$2, password=$3, email=$4, address=$5, city=$6 WHERE id=$1 RETURNING *`
         const input = [id, username, hashedPass, email, address, city]
         const data = await pool.query(formula, input)
+        
         return data.rows
 }
 

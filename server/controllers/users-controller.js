@@ -1,5 +1,6 @@
-const { usersService } = require("../services")
+const { usersService, cartsService } = require("../services")
 const { getHashedPass } = require("../services/auth_service")
+const { fetchCartById, removeCart } = cartsService
 const { fetchUserById, fetchAllUsers, modifyUserSelf, removeUser } = usersService
 
 
@@ -24,7 +25,7 @@ const putUserSelf = async (req, res, next) => {
         const modifiedData = {
                 id, username, hashedPass, email, address, city
         }
-
+        
         await modifyUserSelf(modifiedData)
         res.sendStatus(200)
         next()
@@ -33,14 +34,16 @@ const putUserSelf = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
         const { id } = req.params
         const user = await fetchUserById(id)
+        const cart = await fetchCartById(id)
 
-        if (!user) {
-                const error = new Error("Incorrect user.")
+        if (cart.length || !user) {
+                const error = new Error("Incorrect user or cart is not empty.")
                 next(error)
         }
 
+        await removeCart(id)
         await removeUser(id)
-        res.status(200).json({message: "User has been deleted."})
+        res.status(200).json({message: "User and cart have been deleted."})
         next() 
 }
 

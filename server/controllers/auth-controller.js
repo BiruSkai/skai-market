@@ -63,7 +63,7 @@ const loginUser = async (req, res, next) => {
                                 {session: false},
                                 async (error) => {
                                         if (error) return next(error)
-                                        console.log("auth-contr: ", user)
+                                        
                                         const body = {id:user.id, cart_id:user.cart_id, email:user.email, role:user.user_role};
                                         const token = jwt.sign({user:body}, process.env.JWT_KEY);
                                         
@@ -71,8 +71,7 @@ const loginUser = async (req, res, next) => {
                                                 maxAge: 1000 * 60 * 60,
                                                 httpOnly: true, // A cookie with the HttpOnly attribute is blocked from JavaScript and only is included in requests to the domain.
                                                 sameSite: isProduction ? none : "lax",
-                                                secure: isProduction ? true : false, // cookie sent only in https if true (adding security)
-                                                
+                                                secure: isProduction ? true : false, // cookie sent only in https if true (adding security)     
                                         })
 
                                         return res.status(200).send("Login successful.");

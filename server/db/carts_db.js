@@ -16,12 +16,13 @@ const fetchCartsDb = async () => {
 }
 
 const fetchCartByIdDb = async (userId) => {
-
+        
         const data = await pool.query(
                 `SELECT products.id, title, category, price, description, img_url, status, quantity FROM carts
                 INNER JOIN cart_products ON carts.id = cart_products.cart_id
-                INNER JOIN products ON cart_products.product.id = products.id
+                INNER JOIN products ON cart_products.product_id = products.id
                 WHERE user_id = $1`, [userId])
+        
         return data.rows
 }
 
@@ -49,7 +50,9 @@ const removeCartProductDb = async ({ cart_id, product_id }) => {
         return data.rows[0]
 }
 
+// Needs cart to be empty for removal
 const removeCartDb = async (userId) => {
+        console.log("1 ", userId)
         const data = await pool.query(`DELETE FROM carts WHERE user_id=$1`, [userId])
         return data.rows[0]
 }

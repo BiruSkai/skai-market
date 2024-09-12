@@ -56,13 +56,12 @@ const validateGetProducts = [
 ]
 
 const validatePostProduct = [
-        check("title").not().isEmpty().isLength({max:15}),
+        check("title").not().isEmpty().isLength({max:25}),
         check("price").not().isEmpty(),
-        check("quantity").not().isEmpty().isInt(),
-        check("category").not().isEmpty().isLength({max:15}),
-        check("description").not().isEmpty().isLength({max:50}),
+        check("category").not().isEmpty().isLength({max:25}),
+        check("description").not().isEmpty().isLength({max:150}),
         check("img_url").not().isEmpty(),
-        check("status").not().isEmpty().isLength({max:15}),
+        check("status").not().isEmpty().isLength({max:25}),
         
         (req, res, next) => {
                 const errors = validationResult(req)
@@ -75,13 +74,12 @@ const validatePostProduct = [
 
 const validatePutProduct = [
         check("id").not().isEmpty().isInt(),
-        check("title").not().isEmpty().isLength({max:15}),
+        check("title").not().isEmpty().isLength({max:25}),
         check("price").not().isEmpty(),
-        check("quantity").not().isEmpty().isInt(),
-        check("category").not().isEmpty().isLength({max:15}),
-        check("description").not().isEmpty().isLength({max:50}),
+        check("category").not().isEmpty().isLength({max:25}),
+        check("description").not().isEmpty().isLength({max:150}),
         check("img_url").not().isEmpty(),
-        check("status").not().isEmpty().isLength({max:50}),
+        check("status").not().isEmpty().isLength({max:25}),
         
         (req, res, next) => {
                 const errors = validationResult(req)

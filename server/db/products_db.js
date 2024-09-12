@@ -26,22 +26,22 @@ const createProductDb = async (product) => {
         return data.rows[0]
 }
 
-const modifyProductDb = async ({productId, title, price, quantity, category, description, img_url, status}) => {
+const modifyProductDb = async ({productId, title, price, category, description, img_url, status}) => {
         
-        const formula = `UPDATE products SET title=$2, price=$3, quantity=$4, category=$5, description=$6, img_url=$7, status=$8) 
+        const formula = `UPDATE products SET title=$2, price=$3, category=$4, description=$5, img_url=$6, status=$7
                 WHERE id=$1 RETURNING *`
-        const input = [productId, title, price, quantity, category, description, img_url, status]
+        const input = [productId, title, price, category, description, img_url, status]
         const data = await pool.query(formula, input)
         
         return data.rows[0]
 }
 
-const deleteProductDb = async (productId) => {
+const removeProductDb = async (productId) => {
         const data = await pool.query(`DELETE FROM products WHERE id=$1`, [productId])
         return data.rows[0]
 }
 
 
 module.exports = {
-        fetchProductsDb, fetchProductByIdDb, createProductDb, modifyProductDb, deleteProductDb
+        fetchProductsDb, fetchProductByIdDb, createProductDb, modifyProductDb, removeProductDb
 }

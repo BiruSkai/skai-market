@@ -1,8 +1,6 @@
 const { 
-        createUserDb, fetchUserByEmailDb, fetchUsersDb, fetchUserByIdDb, addGoogleIdUserDb,
-        modifyUserSelfDb, removeUserDb
-
-} = require("../db/users_db")
+        createUserDb, fetchUserByEmailDb, fetchUsersDb, fetchUserByIdDb, addGoogleIdUserDb, modifyUserSelfDb, removeUserDb
+} = require("../db")
 
 
 const createUser = async (userdata) => {

@@ -109,12 +109,13 @@ passport.use(
                                         if (req && req.cookies) {
                                                 token= req.cookies["JWT"]
                                         } 
+                                        
                                         return token
                                 }
                         ])
                 },
                 async (jwtPayload, done) => {
-                        if (token.user_role !== "admin") { // Reject if not admin
+                        if (jwtPayload.user.role !== "admin") { // Reject if not admin
                                 return done(null, false) 
                         } 
                         try {
