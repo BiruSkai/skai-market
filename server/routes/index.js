@@ -49,6 +49,7 @@ router
         .delete("/carts/self/product", validateDeleteCartProduct, passport.authenticate("jwt-customer", {session: false}), carts.deleteCartProductSelf) // Delete a product from a user's cart
         .post("/carts/self/checkout", passport.authenticate("jwt-customer", {session: false}), carts.checkoutCart) // Check out a user's cart and places an order
         
+        //orders
         .get("/orders", passport.authenticate("jwt-admin", {session: false}), orders.getAllOrders) // Get all orders for all users
         .get("/orders/review/:orderId", validateOrder, passport.authenticate("jwt-admin", {session: false}), orders.getOrderById) // Gets one order
         .get("/orders/self", passport.authenticate("jwt-customer", {session: false}), orders.getOrdersSelf) // Get all orders for current user

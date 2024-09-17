@@ -27,10 +27,11 @@ const fetchCartByIdDb = async (userId) => {
 }
 
 const createProductInCartDb = async ({ cart_id, product_id, quantity }) => {
+        
         const formula = `INSERT INTO cart_products (cart_id, product_id, quantity) VALUES ($1, $2, $3) RETURNING *`
         const input = [cart_id, product_id, quantity]
         const data = await pool.query(formula, input)
-
+        
         return data.rows 
 }
 
@@ -52,7 +53,7 @@ const removeCartProductDb = async ({ cart_id, product_id }) => {
 
 // Needs cart to be empty for removal
 const removeCartDb = async (userId) => {
-        console.log("1 ", userId)
+        
         const data = await pool.query(`DELETE FROM carts WHERE user_id=$1`, [userId])
         return data.rows[0]
 }

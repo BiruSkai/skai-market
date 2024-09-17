@@ -28,7 +28,7 @@ passport.use(
                 if (!match) {
                         return done(null, false, {message: "Incorrect email or password."})
                 }
-                return done(null, user, {message: "Log in successfully1111."})
+                return done(null, user, {message: "Log in successfully."})
         }
 ))
 
@@ -89,6 +89,7 @@ passport.use(
                         ])
                 },
                 async (jwtPayload, done) => {
+                        
                         try {
                                 return done(null, jwtPayload.user)
                         } catch (error) {

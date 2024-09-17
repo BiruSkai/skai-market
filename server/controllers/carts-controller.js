@@ -10,7 +10,7 @@ const syncCartSelf = async (req, res, next) => {
         const dbCart = await fetchCartById(userId)
 
         const loggedOutCart = req.body.cart
-
+        
         for (const productId in loggedOutCart) {
                 if (!dbCart.some(item => item.product.id === productId)) {
                         const cartProduct = {
@@ -82,16 +82,17 @@ const checkoutCart = async (req, res, next) => {
         const userId = req.user.id 
 
         const cart = await fetchCartById(userId)
+        
         if (!cart.length === 0) {
                 res.status(500).send("Cart is empty.")
                 next()
         }
         const orderId = await createOrder(userId)
-
+        
         await Promise.all(cart.map(async (item) => {
                 await createProductInOrder({
                         order_id : orderId,
-                        product_id : item.product_id,
+                        product_id : item.id,
                         quantity : item.quantity,
                         price : item.price 
                 })
