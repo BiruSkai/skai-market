@@ -28,11 +28,12 @@ const createProductInOrder = async (orderProduct) => {
 
 const calculateOrderAmount = async (userId) => {
         const cart = await fetchCartById(userId)
-
-        const totalPrice = cart.reduce((acc, item) => {
-                acc + parseFloat(item.product.price) * parseInt(item.product.quantity, 10)
-        }, 0)
-
+        
+        const initialValue = 0
+        const totalPrice = cart.reduce((acc, item) =>
+                acc + parseFloat(item.price) * parseInt(item.quantity, 10), initialValue
+        )
+                
         return totalPrice * 100 // Return price in cents
 }
 

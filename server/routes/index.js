@@ -13,6 +13,7 @@ const router = new Router();
 
 
 router
+        //extra admin
         .get("/admin/advertisement", admin.getAllMainAdvertisement)
         .post("/admin/advertisement", validateFormMainAdvertisement, admin.newMainAdvertisement)
         .put("/admin/advertisement/:id", validateFormMainAdvertisement, admin.newMainAdvertisement)
@@ -54,12 +55,8 @@ router
         .get("/orders/review/:orderId", validateOrder, passport.authenticate("jwt-admin", {session: false}), orders.getOrderById) // Gets one order
         .get("/orders/self", passport.authenticate("jwt-customer", {session: false}), orders.getOrdersSelf) // Get all orders for current user
 
+        //payment
         .post("/payment/create-payment-intent", passport.authenticate("jwt-customer", {session: false}), payment.createPaymentIntent)
-
-        .get("/secured-route", passport.authenticate("jwt-customer",{session:false}), (req, res) => {
-                res
-                .status(200).send("<p>You're in secured route</p><a href='/auth/logout'>Logout</a>")
-        })
         
 
 module.exports = router

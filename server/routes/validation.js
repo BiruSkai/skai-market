@@ -156,7 +156,7 @@ const validateDeleteCartProduct = [
 ]
 
 const validateOrder = [
-        check("order_id").not().isEmpty().isInt(),
+        check("orderId").not().isEmpty().isInt(),
 
         (req, res, next) => {
                 const errors = validationResult(req)

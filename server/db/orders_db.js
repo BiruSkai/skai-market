@@ -3,7 +3,8 @@ const { pool } = require("../config");
 
 const fetchOrdersDb = async () => {
         const data = await pool.query(`SELECT * FROM orders`)
-        return data.rows[0]
+        
+        return data.rows
 }
 
 const fetchOrderByIdDb = async (orderId) => {
@@ -13,6 +14,7 @@ const fetchOrderByIdDb = async (orderId) => {
                 WHERE orders.id = $1`
         const input = [orderId]
         const data = await pool.query(formula, input)
+        
         return data.rows 
 }
 
