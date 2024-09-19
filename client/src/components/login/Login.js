@@ -5,9 +5,9 @@ import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
 import apiAxios from "../../config/axiosConfig"
-import { fetchCurrentUser, isLoggedInUpdated, selectCurrentUser, selectCurrentUserStatus, selectIsLoggedIn } from "../../features/users/usersSlice"
+import { fetchCurrentUser, isLoggedInUpdated, selectCurrentUserStatus, selectIsLoggedIn } from "../../features/users/usersSlice"
 import { fetchCurrentCart, needsCheckoutRedirectUpdated, selectCart, selectFetchCurrentCartStatus, selectNeedsCheckoutRedirect } from "../../features/cart/cartSlice"
-import { fetchCustomerOrders, selectFetchCustomerOrderStatus } from "../../features/orders/ordersSlice"
+import { fetchCustomerOrders, selectFetchCustomerOrdersStatus } from "../../features/orders/ordersSlice"
 
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
         const cartContents = useSelector(selectCart)
         const needsCheckoutRedirect = useSelector(selectNeedsCheckoutRedirect)
         const fetchCurrentCartStatus = useSelector(selectFetchCurrentCartStatus)
-        const fetchCustomerOrderStatus = useSelector(selectFetchCustomerOrderStatus)
+        const fetchCustomerOrdersStatus = useSelector(selectFetchCustomerOrdersStatus)
         const userStatus = useSelector(selectCurrentUserStatus)
         const isLoggedIn = useSelector(selectIsLoggedIn)
 
@@ -31,13 +31,12 @@ const Login = () => {
                                         password: data.password
                                 },
                                 {withCredentials:true}
-                             
                         )
                         if (response.status === 200) {
                                 setMsg("")
                                 dispatch(fetchCurrentUser())
                                 dispatch(fetchCurrentCart(cartContents))
-                                return history.push("/")
+                                dispatch(fetchCustomerOrders())
                         }
                 }
                 catch (error) {
@@ -50,16 +49,19 @@ const Login = () => {
         useEffect(() => {
                 if (    userStatus === "succeeded" &&
                         fetchCurrentCartStatus === "succeeded" &&
-                        fetchCustomerOrderStatus === "succeeded"
-                ) {dispatch(isLoggedInUpdated(true))}
-        }, [userStatus, needsCheckoutRedirect, fetchCurrentCartStatus, dispatch])
+                        fetchCustomerOrdersStatus === "succeeded") {
+                                dispatch(isLoggedInUpdated(true))
+                        }
+        }, [userStatus, fetchCurrentCartStatus, fetchCustomerOrdersStatus, dispatch])
 
         // When login data is fetched, redirect to main site or checkout
         useEffect(() => {
                 if (    userStatus === "succeeded" &&
                         fetchCurrentCartStatus === "succeeded" &&
+                        fetchCustomerOrdersStatus === "succeeded" &&
                         isLoggedIn
                 ) {
+                        //Check if we need to redirect back to checkout process
                         if (needsCheckoutRedirect) {
                                 dispatch(needsCheckoutRedirectUpdated(false)) 
                                 history.push("/checkout")

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apiAxios from "../../config/axiosConfig";
 
 export const fetchAllProducts = createAsyncThunk("products/fetchAllProducts", async () => {

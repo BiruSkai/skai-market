@@ -17,11 +17,19 @@ export const fetchCurrentCart = createAsyncThunk("cart/fetchCurrentCart", async 
         return cart
 });
 
+export const addProductToCart = createAsyncThunk("cart/addProductToCart", async (cartProduct, {getState}) => {
+        if (getState().users.isLoggedIn) {
+                await apiAxios.post("/cart/self/product", cartProduct)
+        }
+        return cartProduct
+})
+
 export const cartSlice = createSlice({
         name:"cart",
         initialState: {
                 cartProducts: {},
-                fetchCurrentCartStatus:"idle",
+                fetchCurrentCartStatus: "idle",
+                addProductToCartStatus: "idle",
                 needsCheckoutRedirect:false,
                 productAddedMsg:"Slice: Product Added",
                 showProductAddedMsg:false

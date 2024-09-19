@@ -7,7 +7,7 @@ export const fetchCustomerOrders = createAsyncThunk("orders/fetchCustomerOrders"
         const orders = {}
 
         response.data.forEach(orderProduct => {
-                if (!orders[orderProduct.product_id]) {
+                if (!orders[orderProduct.order_id]) {
                         orders[orderProduct.order_id] = {}
                 }
                 orders[orderProduct.order_id][orderProduct.product_id] = orderProduct       
@@ -18,7 +18,7 @@ export const fetchCustomerOrders = createAsyncThunk("orders/fetchCustomerOrders"
 
 export const ordersSlice = createSlice({
         name:"orders",
-        intialState: {
+        initialState: {
                 customerOrders: {},
                 fetchCustomerOrdersStatus: "idle"
         },
@@ -47,6 +47,6 @@ export const ordersSlice = createSlice({
 export const { customerOrdersUpdated } = ordersSlice.actions
 export const selectCustomerOrder = state => state.orders.customerOrders
 export const selectOrderById = (state, orderId) => state.orders.customerOrders[orderId]
-export const selectFetchCustomerOrderStatus = state => state.orders.fetchCustomerOrdersStatus
+export const selectFetchCustomerOrdersStatus = state => state.orders.fetchCustomerOrdersStatus
 
 export default ordersSlice.reducer
