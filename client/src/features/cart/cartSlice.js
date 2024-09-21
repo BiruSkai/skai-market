@@ -19,10 +19,30 @@ export const fetchCurrentCart = createAsyncThunk("cart/fetchCurrentCart", async 
 
 export const addProductToCart = createAsyncThunk("cart/addProductToCart", async (cartProduct, {getState}) => {
         if (getState().users.isLoggedIn) {
-                await apiAxios.post("/cart/self/product", cartProduct)
+                await apiAxios.post("/carts/self/product", cartProduct)
         }
         return cartProduct
 })
+
+export const removeProductFromCart = createAsyncThunk("cart/removeProductFromCart", async (product, {getState}) => {
+        if (getState().users.isLoggedIn) {
+                await apiAxios.delete("/carts/self/product", { data: product})
+        }
+        return product 
+})
+
+export const changeProductQuantity = createAsyncThunk("cart/removeProductFromCart", async (product, {getState}) => {
+        if (getState().users.isLoggedIn) {
+                await apiAxios.put("/carts/self/product", { data: product})
+        }
+        return product 
+})
+
+export const checkoutCart = createAsyncThunk("cart/checkoutCart", async () => {
+        const response = await apiAxios.post("/carts/self/checkout")
+        return response.data
+})
+
 
 export const cartSlice = createSlice({
         name:"cart",
@@ -30,11 +50,17 @@ export const cartSlice = createSlice({
                 cartProducts: {},
                 fetchCurrentCartStatus: "idle",
                 addProductToCartStatus: "idle",
+                removeProductFromCartStatus: "idle",
+                changeProductQuantityStatus: "idle",
+                checkoutCartStatus: "idle",
                 needsCheckoutRedirect:false,
                 productAddedMsg:"Slice: Product Added",
                 showProductAddedMsg:false
         },
         reducers: {
+                cartProductsUpdated(state, action) {
+                        state.cartProducts = action.payload
+                },
                 // Used to determine if user logging in as part of checkout-flow
                 needsCheckoutRedirectUpdated(state, action) {
                         state.needsCheckoutRedirect = action.payload
@@ -42,6 +68,10 @@ export const cartSlice = createSlice({
                 // Used for msg showed on alert banner for adding product
                 productAddedMsgUpdated(state, action) {
                         state.productAddedMsg = action.payload
+                },
+                // Used to show alert banner when product added to cart
+                showProductAddedMsgUpdated(state, action) {
+                        state.showProductAddedMsg = action.payload
                 }
         },
         extraReducers: (builder) => {
@@ -57,13 +87,58 @@ export const cartSlice = createSlice({
                         .addCase(fetchCurrentCart.rejected, (state, action) => {
                                 state.fetchCurrentCartStatus = "failed"
                         })
+                // Reducers for adding product in cart
+                        .builder(addProductToCart.pending, (state, action) => {
+                                state.addProductToCartStatus = "loading"
+                        })
+                        .builder(addProductToCart.fulfilled, (state, action) => {
+                                state.addProductToCartStatus = "succeeded"
+                                state.cartProducts[action.payload.product_id] = action.payload
+                        })
+                        .builder(addProductToCart.rejected, (state, action) => {
+                                state.addProductToCartStatus = "failed"
+                        })
+                // Reducer for removing product in cart
+                        .builder(removeProductFromCart.pending, (state, action) => {
+                                state.removeProductFromCartStatus = "loading"
+                        })
+                        .builder(removeProductFromCart.fulfilled, (state, action) => {
+                                state.removeProductFromCartStatus = "succeeded"
+                                delete state.cartProducts[action.payload.product_id]
+                        })
+                        .builder(removeProductFromCart.rejected, (state, action) => {
+                                state.removeProductFromCartStatus = "failed"
+                        })
+                // Reducer for changing product's quantity in cart
+                        .builder(changeProductQuantity.pending, (state, action) => {
+                                state.changeProductQuantityStatus = "loading"
+                        })
+                        .builder(removeProductFromCart.fulfilled, (state, action) => {
+                                state.changeProductQuantityStatus = "succeeded"
+                                state.cartProducts[action.payload.product_id] = action.payload.quantity 
+                        })
+                        .builder(changeProductQuantity.rejected, (state, action) => {
+                                state.changeProductQuantityStatus = "failed"
+                        })
+                // Reducer for tracking status of order's placement
+                        .builder(checkoutCart.pending, (state, action) => {
+                                state.checkoutCartStatus = "loading"
+                        })
+                        .builder(checkoutCart.fulfilled, (state, action) => {
+                                state.checkoutCartStatus = "succeeded"
+                        })
+                        .builder(checkoutCart.rejected, (state, action) => {
+                                state.checkoutCartStatus = "failed"
+                        })
         }
 });
 
 
 export const {
+        cartProductsUpdated,
         needsCheckoutRedirectUpdated,
-        productAddedMsgUpdated
+        productAddedMsgUpdated,
+        showProductAddedMsgUpdated
 } = cartSlice.actions
 
 export const selectCart = state => state.cart.cartProducts
