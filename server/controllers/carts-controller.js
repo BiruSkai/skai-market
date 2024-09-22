@@ -8,11 +8,10 @@ const syncCartSelf = async (req, res, next) => {
         const userId = req.user.id // from passport
         const cartId = req.user.cart_id // from passport
         const dbCart = await fetchCartById(userId)
-
         const loggedOutCart = req.body.cart
         
         for (const productId in loggedOutCart) {
-                if (!dbCart.some(item => item.product.id === productId)) {
+                if (!dbCart.some(item => item.id === Number(productId))) {
                         const cartProduct = {
                                 cart_id: cartId,
                                 product_id: productId,
@@ -22,6 +21,7 @@ const syncCartSelf = async (req, res, next) => {
                 }
         }
         const newCart = await fetchCartById(userId)
+        
         res.status(200).json(newCart)
         next()
 }

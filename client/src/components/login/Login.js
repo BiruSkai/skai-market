@@ -56,6 +56,7 @@ const Login = () => {
 
         // When login data is fetched, redirect to main site or checkout
         useEffect(() => {
+                console.log("2 ", userStatus, fetchCurrentCartStatus, fetchCustomerOrdersStatus, isLoggedIn)
                 if (    userStatus === "succeeded" &&
                         fetchCurrentCartStatus === "succeeded" &&
                         fetchCustomerOrdersStatus === "succeeded" &&

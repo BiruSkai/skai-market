@@ -8,12 +8,14 @@ export const fetchCurrentCart = createAsyncThunk("cart/fetchCurrentCart", async 
                         cart: loggedOutCart
                 }
         )
+        
         const cart = {}
         response.data.forEach(cartProduct => {
-                cart[cartProduct.product.id]= {
+                cart[cartProduct.id]= {
                         quantity: cartProduct.quantity
                 }
         })
+        
         return cart
 });
 
@@ -31,7 +33,7 @@ export const removeProductFromCart = createAsyncThunk("cart/removeProductFromCar
         return product 
 })
 
-export const changeProductQuantity = createAsyncThunk("cart/removeProductFromCart", async (product, {getState}) => {
+export const changeProductQuantity = createAsyncThunk("cart/changeProductQuantity", async (product, {getState}) => {
         if (getState().users.isLoggedIn) {
                 await apiAxios.put("/carts/self/product", { data: product})
         }
@@ -88,46 +90,46 @@ export const cartSlice = createSlice({
                                 state.fetchCurrentCartStatus = "failed"
                         })
                 // Reducers for adding product in cart
-                        .builder(addProductToCart.pending, (state, action) => {
+                        .addCase(addProductToCart.pending, (state, action) => {
                                 state.addProductToCartStatus = "loading"
                         })
-                        .builder(addProductToCart.fulfilled, (state, action) => {
+                        .addCase(addProductToCart.fulfilled, (state, action) => {
                                 state.addProductToCartStatus = "succeeded"
                                 state.cartProducts[action.payload.product_id] = action.payload
                         })
-                        .builder(addProductToCart.rejected, (state, action) => {
+                        .addCase(addProductToCart.rejected, (state, action) => {
                                 state.addProductToCartStatus = "failed"
                         })
                 // Reducer for removing product in cart
-                        .builder(removeProductFromCart.pending, (state, action) => {
+                        .addCase(removeProductFromCart.pending, (state, action) => {
                                 state.removeProductFromCartStatus = "loading"
                         })
-                        .builder(removeProductFromCart.fulfilled, (state, action) => {
+                        .addCase(removeProductFromCart.fulfilled, (state, action) => {
                                 state.removeProductFromCartStatus = "succeeded"
                                 delete state.cartProducts[action.payload.product_id]
                         })
-                        .builder(removeProductFromCart.rejected, (state, action) => {
+                        .addCase(removeProductFromCart.rejected, (state, action) => {
                                 state.removeProductFromCartStatus = "failed"
                         })
                 // Reducer for changing product's quantity in cart
-                        .builder(changeProductQuantity.pending, (state, action) => {
+                        .addCase(changeProductQuantity.pending, (state, action) => {
                                 state.changeProductQuantityStatus = "loading"
                         })
-                        .builder(removeProductFromCart.fulfilled, (state, action) => {
+                        .addCase(changeProductQuantity.fulfilled, (state, action) => {
                                 state.changeProductQuantityStatus = "succeeded"
                                 state.cartProducts[action.payload.product_id] = action.payload.quantity 
                         })
-                        .builder(changeProductQuantity.rejected, (state, action) => {
+                        .addCase(changeProductQuantity.rejected, (state, action) => {
                                 state.changeProductQuantityStatus = "failed"
                         })
                 // Reducer for tracking status of order's placement
-                        .builder(checkoutCart.pending, (state, action) => {
+                        .addCase(checkoutCart.pending, (state, action) => {
                                 state.checkoutCartStatus = "loading"
                         })
-                        .builder(checkoutCart.fulfilled, (state, action) => {
+                        .addCase(checkoutCart.fulfilled, (state, action) => {
                                 state.checkoutCartStatus = "succeeded"
                         })
-                        .builder(checkoutCart.rejected, (state, action) => {
+                        .addCase(checkoutCart.rejected, (state, action) => {
                                 state.checkoutCartStatus = "failed"
                         })
         }

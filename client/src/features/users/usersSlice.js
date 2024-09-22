@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 
 export const fetchCurrentUser = createAsyncThunk("users/fetchCurrentUser", async() => {
-        const response = await apiAxios("/users/self")
+        const response = await apiAxios.get("/users/self")
         return response.data
 })
 

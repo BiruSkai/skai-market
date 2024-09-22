@@ -1,8 +1,23 @@
 import "./nav.css";
 import { Link } from "react-router-dom";
+import { selectIsLoggedIn, selectCurrentUser } from "../../features/users/usersSlice";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 
 const Nav = () => {
+
+        const isLoggedIn = useSelector(selectIsLoggedIn);
+        const user = useSelector(selectCurrentUser)
+        const [username, setUsername] = useState("")
+        
+        useEffect(() => {
+                if (user) {
+                        setUsername(user[0].username)
+                }        
+        }, [username, user])
+        
+
         return ( 
                 <div className="list-unstyled d-flex justify-content-between">
                 {/* Sm size */}
@@ -23,8 +38,18 @@ const Nav = () => {
                                         <i class="bi bi-door-open"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <Link to="/login" class="dropdown-item">Login</Link>
-                                        <Link to="/register" class="dropdown-item">Register</Link>
+                                        { isLoggedIn 
+                                                ?       <div>
+                                                                <span>Hello, {username}</span>
+                                                                <Link to="/" class="dropdown-item">Logout</Link>  
+                                                        </div> 
+                                                :       <div>
+                                                                <Link to="/login" class="dropdown-item">Login</Link>
+                                                                <Link to="/register" class="dropdown-item">Register</Link>
+                                                        </div> 
+                                        }
+                                        {/* <Link to="/login" class="dropdown-item">Login</Link>
+                                        <Link to="/register" class="dropdown-item">Register</Link> */}
                                 </ul>
                         </div>  
                 
