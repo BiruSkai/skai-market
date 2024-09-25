@@ -55,6 +55,7 @@ const removeUserDb = async (id) => {
         return data.rows
 }
 
+
 module.exports = {
         createUserDb,
         fetchUserByEmailDb,

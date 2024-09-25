@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import {
         persistReducer,
         FLUSH,
@@ -22,20 +22,24 @@ const persistConfig = {
         storage
 }
 
-const persistedCartReducer = persistReducer(persistConfig, cartReducer)
+const reducer = combineReducers({
+        cart: cartReducer,
+        users: usersReducer,
+})
+
+const persistedReducer = persistReducer(persistConfig, reducer)
 
 export const store = configureStore({
         reducer: {
-                cart: persistedCartReducer,
+                persistedReducer,
                 adminMainAdvertisement: adminAdvertisementReducer,
-                users: usersReducer,
                 orders: ordersReducer,
                 products: productsReducer
         },
         middleware:  (getDefaultMiddleware) =>
                 getDefaultMiddleware({
                         serializableCheck: {
-                        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+                                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
                         },
         }),
 })

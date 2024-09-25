@@ -143,10 +143,10 @@ export const {
         showProductAddedMsgUpdated
 } = cartSlice.actions
 
-export const selectCart = state => state.cart.cartProducts
-export const selectFetchCurrentCartStatus = state => state.cart.fetchCurrentCartStatus
-export const selectNeedsCheckoutRedirect = state => state.cart.needsCheckoutRedirect
-export const selectProductAddedMsg = state => state.cart.productAddedMsg
-export const selectShowProductAddedMsg = state => state.cart.showProductAddedMsg
+export const selectCart = state => state.persistedReducer.cart.cartProducts
+export const selectFetchCurrentCartStatus = state => state.persistedReducer.cart.fetchCurrentCartStatus
+export const selectNeedsCheckoutRedirect = state => state.persistedReducer.cart.needsCheckoutRedirect
+export const selectProductAddedMsg = state => state.persistedReducer.cart.productAddedMsg
+export const selectShowProductAddedMsg = state => state.persistedReducer.cart.showProductAddedMsg
 
 export default cartSlice.reducer

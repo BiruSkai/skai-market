@@ -27,3 +27,7 @@
         text-decoration: underline;
         border-bottom-color: black;
 }
+
+.navTab {
+        font-size: small;
+}

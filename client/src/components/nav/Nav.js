@@ -1,22 +1,33 @@
 import "./nav.css";
-import { Link } from "react-router-dom";
-import { selectIsLoggedIn, selectCurrentUser } from "../../features/users/usersSlice";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import apiAxios from "../../config/axiosConfig";
+import { selectIsLoggedIn, selectCurrentUser, currentUserUpdated, currentUserStatusUpdated, isLoggedInUpdated } from "../../features/users/usersSlice";
+import { cartProductsUpdated } from "../../features/cart/cartSlice";
+import { customerOrdersUpdated } from "../../features/orders/ordersSlice";
 
 
 const Nav = () => {
 
+        const dispatch = useDispatch()
         const isLoggedIn = useSelector(selectIsLoggedIn);
         const user = useSelector(selectCurrentUser)
-        const [username, setUsername] = useState("")
+        const history = useHistory()
+        console.log("1 ", user, isLoggedIn)
         
-        useEffect(() => {
-                if (user) {
-                        setUsername(user[0].username)
-                }        
-        }, [username, user])
-        
+        const handleLogout = async () => {
+                try {
+                        dispatch(currentUserUpdated({})) // Clear current user info from session.
+                        dispatch(cartProductsUpdated({})) // Clear cart
+                        dispatch(customerOrdersUpdated({})) // Clear orders
+                        dispatch(currentUserStatusUpdated("idle"))
+                        dispatch(isLoggedInUpdated(false))
+                        await apiAxios.post("/auth/logout")
+                        history.push("/login")
+                } catch (err) {
+                        console.log(err)
+                }
+        }
 
         return ( 
                 <div className="list-unstyled d-flex justify-content-between">
@@ -25,7 +36,7 @@ const Nav = () => {
                                 <button class="p-2 border-0 dropdown-toggle bg-light text-primary fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-list"></i> 
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul class="dropdown-menu navTab" aria-labelledby="dropdownMenuButton1">
                                         <Link to="#" class="dropdown-item">About</Link>
                                         <Link to="#" class="dropdown-item">Address</Link>
                                         <Link to="#" class="dropdown-item">News</Link>
@@ -37,19 +48,17 @@ const Nav = () => {
                                 <button class="p-2 border-0 dropdown-toggle bg-light text-primary fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-door-open"></i>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <ul class="dropdown-menu navTab" aria-labelledby="dropdownMenuButton1">
                                         { isLoggedIn 
-                                                ?       <div>
-                                                                <span>Hello, {username}</span>
-                                                                <Link to="/" class="dropdown-item">Logout</Link>  
+                                                ?       <div className="d-flex flex-column justify-content-centre">
+                                                                <p className="mb-0 ps-3">Hello, {user[0].username}</p>
+                                                                <Link to="/" class="dropdown-item" onClick={handleLogout}>Logout</Link>  
                                                         </div> 
                                                 :       <div>
                                                                 <Link to="/login" class="dropdown-item">Login</Link>
                                                                 <Link to="/register" class="dropdown-item">Register</Link>
                                                         </div> 
                                         }
-                                        {/* <Link to="/login" class="dropdown-item">Login</Link>
-                                        <Link to="/register" class="dropdown-item">Register</Link> */}
                                 </ul>
                         </div>  
                 
