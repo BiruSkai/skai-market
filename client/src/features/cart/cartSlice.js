@@ -63,6 +63,9 @@ export const cartSlice = createSlice({
                 cartProductsUpdated(state, action) {
                         state.cartProducts = action.payload
                 },
+                fetchCurrentCartStatusUpdated (state, action) {
+                        state.fetchCurrentCartStatus = action.payload
+                },
                 // Used to determine if user logging in as part of checkout-flow
                 needsCheckoutRedirectUpdated(state, action) {
                         state.needsCheckoutRedirect = action.payload
@@ -138,6 +141,7 @@ export const cartSlice = createSlice({
 
 export const {
         cartProductsUpdated,
+        fetchCurrentCartStatusUpdated,
         needsCheckoutRedirectUpdated,
         productAddedMsgUpdated,
         showProductAddedMsgUpdated

@@ -26,6 +26,9 @@ export const ordersSlice = createSlice({
         reducers: {
                 customerOrdersUpdated (state, action) {
                         state.customerOrders = action.payload
+                },
+                fetchCustomerOrdersStatusUpdated (state, action) {
+                        state.fetchCustomerOrdersStatus = action.payload
                 }
         },
         extraReducers: (builder) => {
@@ -44,7 +47,7 @@ export const ordersSlice = createSlice({
 })
 
 
-export const { customerOrdersUpdated } = ordersSlice.actions
+export const { customerOrdersUpdated, fetchCustomerOrdersStatusUpdated } = ordersSlice.actions
 export const selectCustomerOrder = state => state.orders.customerOrders
 export const selectOrderById = (state, orderId) => state.orders.customerOrders[orderId]
 export const selectFetchCustomerOrdersStatus = state => state.orders.fetchCustomerOrdersStatus

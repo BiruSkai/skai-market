@@ -10,6 +10,10 @@
         padding:0 10px; 
 }
 
+.loginInput {
+        font-size: 0.8rem;
+}
+
 @media only screen and (min-width: 768px) {
         .loginTitle {
                 font-size: 0.8em;

@@ -12,6 +12,7 @@ import AdminAdvertisementUpdate from "./components/admin/AdminAdvertisementUpdat
 import Login from "./components/login/Login"
 import Register from "./components/login/Register";
 import Secret from "./components/Secret";
+import Footer from "./components/footer/Footer";
 
 
 const promise = loadStripe("pk_test_51PXhfPHXtOhtQmpM3zJNiSlgtkNpYmyN7Pkt3e5wx7W0h5kzI0BznPvq9yy0SiUqX0xIG9qs0OHBuHR44jF5ytYd00luYW6qYa")
@@ -39,7 +40,7 @@ function App() {
               <Route exact path="/secured-route" component={Secret} />
             </Switch>
           </div>
-          
+          <Footer />
         </div>
       </Router>
     </Elements>

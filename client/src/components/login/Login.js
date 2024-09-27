@@ -56,7 +56,7 @@ const Login = () => {
 
         // When login data is fetched, redirect to main site or checkout
         useEffect(() => {
-                console.log("2 ", userStatus, fetchCurrentCartStatus, fetchCustomerOrdersStatus, isLoggedIn)
+                console.log("c.Login.js ", userStatus, fetchCurrentCartStatus, fetchCustomerOrdersStatus, isLoggedIn)
                 if (    userStatus === "succeeded" &&
                         fetchCurrentCartStatus === "succeeded" &&
                         fetchCustomerOrdersStatus === "succeeded" &&
@@ -70,7 +70,7 @@ const Login = () => {
                                 history.push("/")
                         }
                 }
-        }, [userStatus, fetchCurrentCartStatus, isLoggedIn, needsCheckoutRedirect, history, dispatch])
+        }, [userStatus, fetchCurrentCartStatus, isLoggedIn, needsCheckoutRedirect, history, fetchCustomerOrdersStatus, dispatch])
 
 
         useEffect(() => {
@@ -87,7 +87,7 @@ const Login = () => {
                                         <div className="h3 loginTitle">Login to Skai-market</div>
                                         <form onSubmit={handleSubmit(onLogin)}>
                                                 <div class="form-floating my-3 loginText">
-                                                        <input type="email" class="form-control" id="floatingInput" {
+                                                        <input type="email" class="form-control loginInput" id="floatingInput" {
                                                                 ...register("email", {
                                                                         required:true,
                                                                         pattern:{value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i},
