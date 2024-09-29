@@ -20,6 +20,7 @@ const Nav = () => {
         const products = useSelector(selectAllProducts)
         const history = useHistory()
         
+        
         console.log("1 ",user, isLoggedIn, fetchAllProductsStatus)
 
         // Fetch all products if login successful
@@ -30,9 +31,12 @@ const Nav = () => {
         }, [isLoggedIn, dispatch])
 
         useEffect(() => {
+                const productsList = []
+
                 if (fetchAllProductsStatus === "succeeded") {
-                        const result = Object.keys(products).map(key => products[key])
-                        setItems(result)
+                        Object.keys(products).forEach(key => productsList.push(products[key]))
+                        
+                        setItems(productsList)
                 }
         }, [ fetchAllProductsStatus, products, dispatch])
 

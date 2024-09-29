@@ -27,7 +27,7 @@ const Carousel = ({items, idArray, status}) => {
 
 
         return ( 
-                <div id="carouselExampleDark" className="carousel carousel-dark slide col-md-6 mx-auto d-block" data-bs-ride="carousel">
+                <div id="carouselExampleDark" className="carousel carousel-dark slide mx-auto d-block" data-bs-ride="carousel">
                         <div className="carousel-indicators">
                         { indexArray.map( id => {
                                 return (

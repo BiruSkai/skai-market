@@ -1,6 +1,8 @@
 .overlayColor {
         background-color:#000;
         opacity:.7;
+        height: 10rem;
+        border-radius: 5%;
 }
 
 .shopping {
