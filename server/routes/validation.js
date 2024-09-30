@@ -55,6 +55,18 @@ const validateGetProducts = [
         }
 ]
 
+const validateGetProductsByCategory = [
+        check("category").not().isEmpty(),
+
+        (req, res, next) => {
+                const errors = validationResult(req)
+                if (!errors.isEmpty()) {
+                        return res.status(422).json({errors: errors.array()})
+                }
+                else next();
+        }
+]
+
 const validatePostProduct = [
         check("title").not().isEmpty().isLength({max:25}),
         check("price").not().isEmpty(),
@@ -170,6 +182,6 @@ const validateOrder = [
 
 module.exports = {
         validateFormMainAdvertisement, validateNewUser, validateLogin, validatePutUser, validateDeleteUser,
-        validateGetProducts, validatePostProduct, validatePutProduct, validateDeleteProduct,
+        validateGetProducts, validateGetProductsByCategory, validatePostProduct, validatePutProduct, validateDeleteProduct,
         validateCart, validateDeleteCartProduct, validateOrder
 }

@@ -11,11 +11,20 @@ export const fetchAllProducts = createAsyncThunk("products/fetchAllProducts", as
         return products
 })
 
+export const fetchProductsByCategory = createAsyncThunk("products/fetchProductsByCategory", async (category) => {
+        
+        const response = await apiAxios.get(`/products/${category}`)
+        console.log("pr.Slic: ", typeof(response.data), response.data)
+        return response.data
+})
+
 export const productsSlice = createSlice({
         name: "products",
         initialState: {
                 allProducts: {},
-                fetchAllProductsStatus: "idle"
+                productCategories: {},
+                fetchAllProductsStatus: "idle",
+                fetchProductsByCategoryStatus: "idle"
         },
         extraReducers: (builder) => {
         // Reduces for fetching products
@@ -30,12 +39,24 @@ export const productsSlice = createSlice({
                         .addCase(fetchAllProducts.rejected, (state, action) => {
                                 state.fetchAllProductsStatus = "failed"
                         })
+                        .addCase(fetchProductsByCategory.pending, (state, action) => {
+                                state.fetchProductsByCategoryStatus = "loading"
+                        })
+                        .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
+                                state.fetchProductsByCategoryStatus = "succeeded"
+                                state.productCategories = action.payload
+                        })
+                        .addCase(fetchProductsByCategory.rejected, (state, action) => {
+                                state.fetchProductsByCategoryStatus = "failed"
+                        })
         }
 })
 
 
 export const selectAllProducts = state => state.products.allProducts
+export const selectProductCategories = state => state.products.productCategories
 export const selectProductById = (state, productId) => state.products.allProducts[productId]
 export const selectFetchAllProductsStatus = state => state.products.fetchAllProductsStatus
+export const selectFetchProductsByCategoryStatus = state => state.products.fetchProductsByCategoryStatus
 
 export default productsSlice.reducer 

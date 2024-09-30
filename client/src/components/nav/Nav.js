@@ -31,13 +31,19 @@ const Nav = () => {
         }, [isLoggedIn, dispatch])
 
         useEffect(() => {
-                const productsList = []
-
+                
+                let objectToArray = []
                 if (fetchAllProductsStatus === "succeeded") {
-                        Object.keys(products).forEach(key => productsList.push(products[key]))
-                        
-                        setItems(productsList)
+                        // Change object to array
+                        Object.keys(products).forEach(key => objectToArray.push(products[key].category))
                 }
+
+                // Filter duplicate in array
+                let productsCategory = objectToArray.filter((element, index) => {
+                        return objectToArray.indexOf(element) === index;
+                    });
+                
+                setItems(productsCategory)
         }, [ fetchAllProductsStatus, products, dispatch])
 
         const handleLogout = async () => {

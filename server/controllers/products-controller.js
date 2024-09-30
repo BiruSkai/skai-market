@@ -1,10 +1,18 @@
 const { validationResult } = require("express-validator")
 const { productService } = require("../services")
-const { fetchProducts, fetchProductById, createProduct, modifyProduct, removeProduct } = productService
+const { fetchProducts, fetchProductCategories, fetchProductById, createProduct, modifyProduct, removeProduct } = productService
 
 
 const getAllProducts = async (req, res, next) => {
         const data = await fetchProducts()
+        res.status(200).json(data)
+        next()
+}
+
+const getProductsByCategory = async (req, res, next) => {
+        const {category} = req.params
+        
+        const data = await fetchProductCategories(category)
         res.status(200).json(data)
         next()
 }
@@ -76,6 +84,7 @@ const deleteProduct = async (req, res, next) => {
 
 module.exports = {
         getAllProducts,
+        getProductsByCategory,
         getProductById,
         postProduct,
         putProduct,

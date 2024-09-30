@@ -3,10 +3,10 @@ const Router = require("express-promise-router");
 const passport = require("passport");
 const { 
         validateFormMainAdvertisement, validateNewUser, validateLogin, validatePutUser, validateDeleteUser,
-        validateGetProducts, validatePostProduct, validatePutProduct, validateDeleteProduct,
-        validateCart, validateDeleteCartProduct, validateOrder
-
+        validateGetProducts, validateGetProductsByCategory, validatePostProduct, validatePutProduct, validateDeleteProduct,
+        validateCart, validateDeleteCartProduct, validateOrder,
 } = require("./validation");
+
 const { auth, products, admin, users, carts, orders, payment } = require("../controllers")
 
 const router = new Router();
@@ -31,6 +31,7 @@ router
         
         //products
         .get("/products", products.getAllProducts)
+        .get("/products/:category", validateGetProductsByCategory, products.getProductsByCategory)
         .get("/products/:id", validateGetProducts, products.getProductById)
         .post("/products", validatePostProduct, passport.authenticate("jwt-admin", {session: false}), products.postProduct)
         .put("/products/:id", validatePutProduct, passport.authenticate("jwt-admin", {session: false}), products.putProduct)

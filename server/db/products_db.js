@@ -7,6 +7,12 @@ const fetchProductsDb = async () => {
         return data.rows
 }
 
+const fetchProductCategoriesDb = async (category) => {
+        const data = await pool.query(`SELECT * FROM products WHERE category = $1`, [category])
+        
+        return data.rows
+}
+
 const fetchProductByIdDb = async (productId) => {
         const formula = `SELECT * FROM products WHERE id = $1` 
         const input = [productId]
@@ -43,5 +49,5 @@ const removeProductDb = async (productId) => {
 
 
 module.exports = {
-        fetchProductsDb, fetchProductByIdDb, createProductDb, modifyProductDb, removeProductDb
+        fetchProductsDb, fetchProductCategoriesDb, fetchProductByIdDb, createProductDb, modifyProductDb, removeProductDb
 }

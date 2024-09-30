@@ -1,8 +1,12 @@
-const { fetchProductsDb, fetchProductByIdDb, createProductDb, modifyProductDb, removeProductDb } = require("../db") 
+const { fetchProductsDb, fetchProductCategoriesDb, fetchProductByIdDb, createProductDb, modifyProductDb, removeProductDb } = require("../db") 
 
 
 const fetchProducts = async () => {
         return await fetchProductsDb()
+}
+
+const fetchProductCategories = async (category) => {
+        return await fetchProductCategoriesDb(category)
 }
 
 const fetchProductById = async (productId) => {
@@ -23,5 +27,5 @@ const removeProduct = async (productId) => {
 
 
 module.exports = {
-        fetchProducts, fetchProductById, createProduct, modifyProduct, removeProduct
+        fetchProducts, fetchProductCategories, fetchProductById, createProduct, modifyProduct, removeProduct
 }
