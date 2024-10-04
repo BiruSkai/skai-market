@@ -44,7 +44,7 @@ const Nav = () => {
                     });
                 
                 setItems(productsCategory)
-        }, [ fetchAllProductsStatus, products, dispatch])
+        }, [ fetchAllProductsStatus, dispatch])
 
         const handleLogout = async () => {
                 try {
@@ -68,7 +68,7 @@ const Nav = () => {
         }
 
         return ( 
-                <div className="list-unstyled d-flex justify-content-between">
+                <div className="list-unstyled d-flex justify-content-between" style={{fontFamily:"serif"}}>
                 {/* Sm size */}
                         <div class="dropdown d-md-none" >
                                 <button class="p-2 border-0 dropdown-toggle bg-light text-primary fw-bold" data-bs-auto-close="outside" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

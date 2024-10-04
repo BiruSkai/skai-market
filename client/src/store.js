@@ -25,6 +25,7 @@ const persistConfig = {
 const reducer = combineReducers({
         cart: cartReducer,
         users: usersReducer,
+        // products: productsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

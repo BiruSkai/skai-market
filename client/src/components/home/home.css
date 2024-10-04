@@ -19,11 +19,15 @@
         color: green;
 }
 
+.home {
+        min-height: 100vh
+}
+
 @media only screen and (min-width: 768px) {
 
         h5 { font-size: 1.1em; }
 
-       .mdText {
+       .home {
                 font-size: 0.8em;
        }
 }

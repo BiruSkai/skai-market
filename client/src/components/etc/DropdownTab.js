@@ -1,14 +1,15 @@
 import { Link, useHistory } from "react-router-dom";
 import "../nav/nav.css"
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductsByCategory, selectFetchProductsByCategoryStatus } from "../../features/products/productsSlice";
-import { useEffect } from "react";
+import { fetchProductsByCategory, selectFetchProductsByCategoryStatus, setCategoryTheme } from "../../features/products/productsSlice";
+import { useEffect, useState } from "react";
 
 
 const DropdownTab = ({name, items}) => {
         const dispatch = useDispatch()
         const history = useHistory()
-        const fetchProductCategoriesStatus = useSelector(selectFetchProductsByCategoryStatus)
+        const fetchProductsByCategoryStatus = useSelector(selectFetchProductsByCategoryStatus)
+        const [category, setCategory] = useState("")
 
         // Sorting items a-z
          const ascItems = items.sort((a, b) => {
@@ -16,21 +17,23 @@ const DropdownTab = ({name, items}) => {
         })
 
         useEffect(() => {
-                if (fetchProductCategoriesStatus === "succeeded") {
-                        history.push("/products/category")
+                if (fetchProductsByCategoryStatus === "succeeded") {
+                        history.push(`/products/category/${category}`)
                 }
-        }, [fetchProductCategoriesStatus])
+        }, [history, fetchProductsByCategoryStatus, category])
 
         const handleClick = (item) => {
+                setCategory(item)
+                dispatch(setCategoryTheme(item))
                 dispatch(fetchProductsByCategory(item))
         }
       
         return ( 
-                <div class="dropdown">
+                <div class="dropdown" >
                         <span class="dropdown-toggle navItemMd" data-bs-toggle="dropdown" aria-expanded="false">
                                 {name}
                         </span>
-                        <ul class="dropdown-menu navItemMd categoryTab" autoClose="false">
+                        <ul className="dropdown-menu navItemMd categoryTab text-decoration-none" autoClose="false">
                                 {
                                         ascItems 
                                         ?       ascItems.map((item) => {

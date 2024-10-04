@@ -12,9 +12,8 @@ export const fetchAllProducts = createAsyncThunk("products/fetchAllProducts", as
 })
 
 export const fetchProductsByCategory = createAsyncThunk("products/fetchProductsByCategory", async (category) => {
-        
         const response = await apiAxios.get(`/products/${category}`)
-        console.log("pr.Slic: ", typeof(response.data), response.data)
+        
         return response.data
 })
 
@@ -22,9 +21,15 @@ export const productsSlice = createSlice({
         name: "products",
         initialState: {
                 allProducts: {},
-                productCategories: {},
+                productsInCategory: [],
+                categoryTheme: "",
                 fetchAllProductsStatus: "idle",
                 fetchProductsByCategoryStatus: "idle"
+        },
+        reducers: {
+                setCategoryTheme(state, action) {
+                        state.categoryTheme = action.payload
+                }
         },
         extraReducers: (builder) => {
         // Reduces for fetching products
@@ -39,12 +44,13 @@ export const productsSlice = createSlice({
                         .addCase(fetchAllProducts.rejected, (state, action) => {
                                 state.fetchAllProductsStatus = "failed"
                         })
+                        // fetchProductsByCategory
                         .addCase(fetchProductsByCategory.pending, (state, action) => {
                                 state.fetchProductsByCategoryStatus = "loading"
                         })
                         .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
                                 state.fetchProductsByCategoryStatus = "succeeded"
-                                state.productCategories = action.payload
+                                state.productsInCategory = action.payload
                         })
                         .addCase(fetchProductsByCategory.rejected, (state, action) => {
                                 state.fetchProductsByCategoryStatus = "failed"
@@ -53,9 +59,12 @@ export const productsSlice = createSlice({
 })
 
 
+export const { setCategoryTheme } = productsSlice.actions
+
 export const selectAllProducts = state => state.products.allProducts
-export const selectProductCategories = state => state.products.productCategories
+export const selectProductsInCategory = state => state.products.productsInCategory
 export const selectProductById = (state, productId) => state.products.allProducts[productId]
+export const selectCategoryTheme = state => state.products.categoryTheme
 export const selectFetchAllProductsStatus = state => state.products.fetchAllProductsStatus
 export const selectFetchProductsByCategoryStatus = state => state.products.fetchProductsByCategoryStatus
 

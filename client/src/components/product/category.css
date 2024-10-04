@@ -1,0 +1,19 @@
+.card {
+        transition:all .2s ease-in-out; 
+}
+
+.setCardBody {
+        font-size: 0.8rem;
+   
+}
+
+.card:hover {
+        transform: scale(1.1);
+}
+
+@media only screen and (min-width: 768px) {
+        .setCardBody {
+                font-size: 0.5rem;
+           
+        }
+}

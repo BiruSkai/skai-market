@@ -19,6 +19,7 @@ const fetchUserByEmailDb = async (email, username) => {
                 INNER JOIN carts ON userdata.id = carts.user_id
                 WHERE email=$1 OR username=$2 AND active = true`, [email, username])
         console.log("2.1 ", data.rows[0])
+        
         return data.rows[0]
 }
 

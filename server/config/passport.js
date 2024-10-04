@@ -17,7 +17,6 @@ passport.use(
         },
         async (username, password, done) => {
                 const user = await usersService.fetchUserEmail(username);
-                
                 if (!user) {
                         return done(null, false, {message: "Incorrect email or password."})
                 }
@@ -25,6 +24,7 @@ passport.use(
                         return done(null, false, {message: "This email address is related to google login. Try login with google."})
                 }
                 const match = await bcrypt.compare(password, user.password)
+                
                 if (!match) {
                         return done(null, false, {message: "Incorrect email or password."})
                 }
