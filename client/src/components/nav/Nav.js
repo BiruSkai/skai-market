@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import apiAxios from "../../config/axiosConfig";
 import { selectIsLoggedIn, selectCurrentUser, currentUserUpdated, currentUserStatusUpdated, isLoggedInUpdated } from "../../features/users/usersSlice";
-import { cartProductsUpdated, fetchCurrentCartStatusUpdated } from "../../features/cart/cartSlice";
+import { cartProductsUpdated, fetchCurrentCartStatusUpdated, selectCart } from "../../features/cart/cartSlice";
 import { customerOrdersUpdated, fetchCustomerOrdersStatusUpdated } from "../../features/orders/ordersSlice";
 import { fetchAllProducts, selectAllProducts, selectFetchAllProductsStatus } from "../../features/products/productsSlice";
 import { useEffect, useState } from "react";
@@ -18,8 +18,12 @@ const Nav = () => {
         const user = useSelector(selectCurrentUser)
         const fetchAllProductsStatus = useSelector(selectFetchAllProductsStatus);
         const products = useSelector(selectAllProducts)
+        const cart = useSelector(selectCart)
         const history = useHistory()
         
+        let nrCartItems = Object.keys(cart).reduce((acc, keyName) => 
+                acc + cart[keyName].quantity, 0
+        )
         
         console.log("1 ",user, isLoggedIn, fetchAllProductsStatus)
 
@@ -81,23 +85,36 @@ const Nav = () => {
                                 </ul>
                         </div> 
                         <div className="p-2 fishIcon d-md-none">Skai Market</div>
-                        <div class="d-md-none">
-                                <button class="p-2 border-0 dropdown-toggle bg-light text-primary fw-bold" data-bs-auto-close="outside" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-door-open"></i>
-                                </button>
-                                <ul class="dropdown-menu navTab" aria-labelledby="dropdownMenuButton1">
-                                        { isLoggedIn 
-                                                ?       <div className="d-flex flex-column justify-content-centre">
-                                                                <p className="mb-0 ps-3 pb-1">Hello, {user[0].username}</p>
-                                                                <Link to="/profile" class="dropdown-item">Profile</Link>
-                                                                <Link to="" className="dropdown-item" onClick={handleLogout}>Logout</Link>  
-                                                        </div> 
-                                                :       <div>
-                                                                <Link to="/login" class="dropdown-item">Login</Link>
-                                                                <Link to="/register" class="dropdown-item">Register</Link>
-                                                        </div> 
-                                        }
-                                </ul>
+                        <div class="d-flex d-md-none">
+                                <div>
+                                        <Link to="/cart">
+                                        <button type="button" class="border-0 bg-light text-primary position-relative">
+                                                <i class="bi bi-cart-check"></i>
+                                                <span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info">
+                                                        { nrCartItems }
+                                                        <span class="visually-hidden">unread messages</span>
+                                                </span>
+                                        </button>
+                                        </Link>
+                                </div>
+                                <div>
+                                        <button class="p-2 border-0 dropdown-toggle bg-light text-primary fw-bold" data-bs-auto-close="outside" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bi bi-door-open"></i>
+                                        </button>
+                                        <ul class="dropdown-menu navTab" aria-labelledby="dropdownMenuButton1">
+                                                { isLoggedIn 
+                                                        ?       <div className="d-flex flex-column justify-content-centre">
+                                                                        <p className="mb-0 ps-3 pb-1">Hello, {user[0].username}</p>
+                                                                        <Link to="/profile" class="dropdown-item">Profile</Link>
+                                                                        <Link to="" className="dropdown-item" onClick={handleLogout}>Logout</Link>  
+                                                                </div> 
+                                                        :       <div>
+                                                                        <Link to="/login" class="dropdown-item">Login</Link>
+                                                                        <Link to="/register" class="dropdown-item">Register</Link>
+                                                                </div> 
+                                                }
+                                        </ul>
+                                </div>
                         </div>  
                 
                 {/* Md size */} 
@@ -108,13 +125,23 @@ const Nav = () => {
                                         <Link to="#" className="navItemMd">News</Link>
                                         <DropdownTab name="Categories" items={items}/>
                                 </div>
-                                <div clsas="d-flex align-items-center">
+                                <div clsas="d-flex flex-inline align-items-center">
                                 {
                                         isLoggedIn 
                                         ?       <div>
+                                                        <Link to="/cart">
+                                                        <button type="button" class="border-0 position-relative" style={{backgroundColor:"transparent"}}>
+                                                                <i class="bi bi-cart-check"></i>
+                                                                <span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-info">
+                                                                        { nrCartItems }
+                                                                        <span class="visually-hidden">unread messages</span>
+                                                                </span>
+                                                        </button>
+                                                        </Link>   
                                                         <span className="navItemMd">Hello, {user[0].username}</span>
                                                         <Link to="/profile" className="navItemMd">Profile</Link>
                                                         <Link to="" className="navItemMd" onClick={handleLogout}>Logout</Link>
+                                                        
                                                 </div> 
                                         :       <div>
                                                         <Link to="/login" className="navItemMd">Login</Link>

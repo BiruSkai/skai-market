@@ -19,16 +19,17 @@ import productsReducer from "./features/products/productsSlice"
 
 const persistConfig = {
         key: "root",
+        version: 1,
         storage
 }
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
         cart: cartReducer,
         users: usersReducer,
         // products: productsReducer
 })
 
-const persistedReducer = persistReducer(persistConfig, reducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
         reducer: {
